@@ -46,7 +46,8 @@ em.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:
 .btn.lg{padding:22px 36px;font-size:17px}
 .arrow{width:16px;height:16px;transition:transform .5s var(--ease)}.btn:hover .arrow{transform:translate(3px,-3px)}
 
-#bgc{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+#bgc{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.45}
+#g3{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 /* loader */
 #loader{position:fixed;inset:0;z-index:1000;background:var(--bg);transition:opacity 1s var(--ease)}
 #loader.out{opacity:0}#loader.done{display:none}
@@ -513,6 +514,7 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
 </div>
 
 <canvas id="bgc"></canvas>
+<canvas id="g3"></canvas>
 <div class="grain"></div>
 <div class="cur cur-wrap" id="curWrap"><div id="cur"></div></div>
 <div class="cur cur-wrap" id="curWrap2"><div id="curRing"></div></div>
@@ -766,6 +768,7 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
 
 <a class="wa-float" href="#" data-wa data-msg="Hola Kuvo, quiero información." aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c.6.3 1.1.4 1.5.6a3.6 3.6 0 0 0 1.7.1 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span>Escríbenos, respondemos rápido</span></a>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 /* ───── config ───── */
@@ -1125,6 +1128,76 @@ $$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quier
   });
 })();
 
+
+/* ───── 3D: viaje de cámara por un túnel de nanobots (ligado al scroll) ───── */
+const threeFrame = (function scene3d(){
+  if (!window.THREE) return () => {};
+  let R; try { R = new THREE.WebGLRenderer({ canvas: $("#g3"), alpha: true, antialias: true, powerPreference: "high-performance" }); } catch (e) { return () => {}; }
+  const mob = innerWidth < 700; R.setPixelRatio(Math.min(devicePixelRatio || 1, mob ? 1.5 : 2)); R.setClearColor(0x000000, 0);
+  const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(62, 1, .1, 420), LEN = 270;
+  const G = new THREE.Color("#2fb573"), M = new THREE.Color("#9ff0c4"), W = new THREE.Color("#eef0e9");
+  const px = z => Math.sin(z * .035) * 2.4, py = z => Math.cos(z * .027) * 1.4;
+  /* partículas */
+  const N = mob ? 1200 : 2800, pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) { const z = 24 - Math.random() * (LEN + 70), a = Math.random() * 6.2832, r = 4 + Math.pow(Math.random(), .6) * 40; pos[i * 3] = px(z) + Math.cos(a) * r; pos[i * 3 + 1] = py(z) + Math.sin(a) * r * .75; pos[i * 3 + 2] = z; const c = Math.random() < .3 ? M : Math.random() < .5 ? G : W; col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b; }
+  const pg = new THREE.BufferGeometry(); pg.setAttribute("position", new THREE.BufferAttribute(pos, 3)); pg.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  const pts = new THREE.Points(pg, new THREE.PointsMaterial({ size: .26, vertexColors: true, transparent: true, opacity: .7, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true })); scene.add(pts);
+  /* anillos-puerta */
+  const rings = [], cg = []; for (let i = 0; i <= 96; i++) { const a = i / 96 * 6.2832; cg.push(new THREE.Vector3(Math.cos(a), Math.sin(a), 0)); }
+  const ringGeo = new THREE.BufferGeometry().setFromPoints(cg);
+  for (let i = 0; i < 20; i++) { const z = -6 - i * (LEN / 19), g = new THREE.Group(), r = 8 + (i % 3) * 1.6;
+    const l1 = new THREE.Line(ringGeo, new THREE.LineBasicMaterial({ color: G, transparent: true, opacity: .42 })); l1.scale.setScalar(r);
+    const l2 = new THREE.Line(ringGeo, new THREE.LineBasicMaterial({ color: M, transparent: true, opacity: .2 })); l2.scale.setScalar(r * .72); l2.rotation.z = 1;
+    const ticks = new THREE.Group(); for (let k = 0; k < 8; k++) { const t = new THREE.Mesh(new THREE.BoxGeometry(.5, .14, .14), new THREE.MeshBasicMaterial({ color: M, transparent: true, opacity: .8 })); const a = k / 8 * 6.2832; t.position.set(Math.cos(a) * r, Math.sin(a) * r, 0); t.rotation.z = a; ticks.add(t); }
+    g.add(l1, l2, ticks); g.position.set(px(z), py(z), z); g.userData = { sp: (i % 2 ? 1 : -1) * (.08 + (i % 4) * .03) }; scene.add(g); rings.push(g); }
+  /* poliedros flotantes */
+  const geos = [new THREE.IcosahedronGeometry(1, 0), new THREE.OctahedronGeometry(1.1, 0), new THREE.BoxGeometry(1.5, 1.5, 1.5), new THREE.TetrahedronGeometry(1.3, 0), new THREE.TorusGeometry(1, .28, 6, 14)], objs = [];
+  for (let i = 0; i < (mob ? 12 : 22); i++) { const z = -4 - i * (LEN / 22) - Math.random() * 6, a = Math.random() * 6.2832, r = 4.5 + Math.random() * 6, sc = .8 + Math.random() * 1.5;
+    const m = new THREE.LineSegments(new THREE.EdgesGeometry(geos[i % geos.length]), new THREE.LineBasicMaterial({ color: i % 3 ? G : M, transparent: true, opacity: .75 })); m.scale.setScalar(sc);
+    m.position.set(px(z) + Math.cos(a) * r, py(z) + Math.sin(a) * r * .8, z); m.userData = { rx: (Math.random() - .5) * .6, ry: (Math.random() - .5) * .6, y0: m.position.y, ph: Math.random() * 6.28 }; scene.add(m); objs.push(m); }
+  /* K en 3D al final del viaje */
+  const K = new THREE.Group(), u = .15, boxes = [[9 * u, 40 * u, 6 * u, -13.5 * u, 0, 0], [27.6 * u, 9 * u, 6 * u, 6.5 * u, 10 * u, .812], [27.6 * u, 9 * u, 6 * u, 6.5 * u, -10 * u, -.812]];
+  boxes.forEach(([w, h, d, x, y, rz]) => { const bg = new THREE.BoxGeometry(w, h, d), m = new THREE.Mesh(bg, new THREE.MeshBasicMaterial({ color: G, transparent: true, opacity: .16, depthWrite: false })), e = new THREE.LineSegments(new THREE.EdgesGeometry(bg), new THREE.LineBasicMaterial({ color: M })); const gp = new THREE.Group(); gp.add(m, e); gp.position.set(x, y, 0); gp.rotation.z = rz; K.add(gp); });
+  const kz = 6 - LEN - 24; K.position.set(px(kz), py(kz), kz); scene.add(K);
+  const halo = new THREE.Mesh(new THREE.RingGeometry(6.4, 6.52, 64), new THREE.MeshBasicMaterial({ color: M, transparent: true, opacity: .5, side: THREE.DoubleSide })); halo.position.copy(K.position); scene.add(halo);
+  function size(){ R.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / Math.max(1, innerHeight); cam.updateProjectionMatrix(); }
+  size(); window.addEventListener("resize", size);
+  let zc = 0, vel = 0, lastY = window.scrollY;
+  return function(now){
+    const max = Math.max(1, document.documentElement.scrollHeight - innerHeight), p = clamp(window.scrollY / max, 0, 1);
+    vel += (Math.min(70, Math.abs(window.scrollY - lastY)) - vel) * .1; lastY = window.scrollY; zc += (p - zc) * .07;
+    const mxn = mouseIn ? mx / innerWidth - .5 : 0, myn = mouseIn ? my / innerHeight - .5 : 0, z = 6 - zc * LEN, tz = z - 14, t = now * .001;
+    cam.position.set(px(z) + mxn * 1.2, py(z) - myn * .8, z);
+    cam.lookAt(px(tz) + mxn * 4, py(tz) - myn * 2.4, tz); cam.rotateZ(Math.sin(zc * 14) * .07 + mxn * .06);
+    cam.fov = 62 + vel * .4; cam.updateProjectionMatrix();
+    for (const g of rings) g.rotation.z += g.userData.sp * .01;
+    for (const o of objs) { o.rotation.x += o.userData.rx * .01; o.rotation.y += o.userData.ry * .01; o.position.y = o.userData.y0 + Math.sin(t + o.userData.ph) * .5; }
+    K.rotation.y = Math.sin(t * .6) * .5 + (1 - clamp(zc * 5 - 4, 0, 1)) * 1.2; K.rotation.x = Math.sin(t * .4) * .12; halo.rotation.z = t * .2; pts.rotation.z = t * .004;
+    R.render(scene, cam);
+  };
+})();
+
+/* ───── profundidad 3D: tarjetas y títulos giran con el scroll ───── */
+const depthFrame = (function depth(){
+  if (reduce) return () => {};
+  const els = $$(".sec-head,.tile,.pc,.plan,.pstep,.scard,.stats .wrap>div,#faq details,.cta h2"), base = [], cache = [];
+  els.forEach(e => { e.parentElement.style.perspective = "1300px"; });
+  function measure(){ els.forEach(e => { e.style.rotate = ""; e.style.translate = ""; e.style.scale = ""; }); els.forEach((e, i) => { const r = e.getBoundingClientRect(); base[i] = { c: r.top + window.scrollY + r.height / 2 }; cache[i] = ""; }); }
+  measure(); window.addEventListener("load", () => setTimeout(measure, 300)); window.addEventListener("resize", measure); setTimeout(measure, 2500);
+  let n = 0, lh = document.documentElement.scrollHeight;
+  return function(){
+    if (++n % 90 === 0) { const h = document.documentElement.scrollHeight; if (Math.abs(h - lh) > 4) { lh = h; measure(); } }
+    const vh = innerHeight, y = window.scrollY;
+    for (let i = 0; i < els.length; i++) {
+      const t = clamp((base[i].c - y - vh / 2) / (vh / 2), -1.4, 1.4), a = Math.abs(t), e = els[i];
+      let v; if (a < .02) v = ""; else v = (t > 0 ? t * 17 : t * 7).toFixed(1) + "|" + (a * a * 150).toFixed(0) + "|" + (1 - a * .035).toFixed(3);
+      if (v === cache[i]) continue; cache[i] = v;
+      if (!v) { e.style.rotate = ""; e.style.translate = ""; e.style.scale = ""; continue; }
+      const [rx, tz, sc] = v.split("|"); e.style.rotate = `1 0 0 ${rx}deg`; e.style.translate = `0 0 -${tz}px`; e.style.scale = sc;
+    }
+  };
+})();
+
 /* ───── frame loop ───── */
 const prog = $("#prog"), heroEl = $("#hero");
 function onFrame(now){
@@ -1133,7 +1206,7 @@ function onFrame(now){
   hdr.classList.toggle("hide", y > lastY && y > 200 && !document.body.classList.contains("menu"));
   hdr.classList.toggle("solid", y > 40); lastY = y;
   rx += (mx - rx) * .18; ry += (my - ry) * .18; curW2.style.transform = `translate(${rx}px,${ry}px)`;
-  bgFrame(now); heroFrame(now); orbFrame(now); if (document.body.classList.contains("ready")) morphFrame(now);
+  bgFrame(now); threeFrame(now); depthFrame(now); heroFrame(now); orbFrame(now); if (document.body.classList.contains("ready")) morphFrame(now);
 }
 
 /* ───── reloj Honduras ───── */
