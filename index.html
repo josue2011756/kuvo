@@ -450,6 +450,66 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
 .wa-float span{position:absolute;right:70px;top:50%;transform:translateY(-50%) translateX(10px);background:var(--fg);color:var(--ink);font-size:13px;padding:10px 14px;border-radius:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s,transform .4s var(--out)}
 .wa-float:hover span{opacity:1;transform:translateY(-50%)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ───────── TIPOGRAFÍA GRANDE ───────── */
+body{font-size:19px}
+.mono{font-size:13px}
+h2{font-size:clamp(46px,6.8vw,108px);line-height:.95}
+.sec-head{margin-bottom:76px}
+.sec-head .mono{font-size:14px}
+.sec-head p{font-size:21px;max-width:520px}
+.btn{font-size:16px}
+.hero .lead{font-size:clamp(18px,1.7vw,25px);max-width:700px}
+.hero-foot div b{font-size:40px}.hero-foot div span{font-size:16px}
+.pill{font-size:12px}
+.msteps{height:600px}
+.mstep{max-width:660px}
+.mstep .big{font-size:clamp(96px,12.5vw,200px)}
+.mstep h3{font-size:clamp(46px,5.8vw,92px);margin:22px 0 18px}
+.mstep p{font-size:22px;max-width:560px}
+.mstep a{font-size:13px}
+.mlabel{font-size:13px;top:-60px}
+.demo p.sub{font-size:22px;max-width:520px}
+.demo li{font-size:20px}
+.demo .kick,.hint{font-size:13px}
+.scard h3{font-size:24px}.scard p{font-size:16px}.scard .tg span{font-size:12px}
+.oc{font-size:14px}
+.tile h3{font-size:32px}.tile p{font-size:18px;max-width:460px}
+.tile .num{font-size:13px}.tile .tags i{font-size:11.5px}
+.pc h3{font-size:38px}.pc p{font-size:18px}
+.proc-grid{grid-template-columns:1fr 1.3fr}
+.proc .left p{font-size:21px;max-width:460px}
+.pstep{grid-template-columns:130px 1fr;padding:50px 0}
+.pstep .n{font-size:92px}
+.pstep h3{font-size:38px}
+.pstep p{font-size:20px;max-width:580px}
+.pstep .d{font-size:13px}
+.stats b{font-size:clamp(66px,8.6vw,140px)}
+.stats span{font-size:18px;max-width:250px}
+.plan h3{font-size:40px}.plan .p{font-size:36px}.plan .p small{font-size:12px}
+.plan ul{font-size:17px}
+.faq{max-width:980px}
+.faq summary{font-size:clamp(22px,2.3vw,32px);padding:32px 0}
+.faq details p{font-size:19px}
+.cta h2{font-size:clamp(66px,12.5vw,210px)}
+.cta p{font-size:22px;max-width:600px}
+footer{font-size:17px}
+@media(max-width:900px){
+  body{font-size:18px}
+  h2{font-size:clamp(40px,11vw,66px)}
+  .sec-head p{font-size:19px}
+  .hero-foot div b{font-size:28px}.hero-foot div span{font-size:13px}
+  .msteps{height:420px}
+  .mstep .big{font-size:84px}.mstep h3{font-size:clamp(36px,10vw,54px);margin:14px 0 12px}.mstep p{font-size:18px}
+  .tile h3{font-size:28px}.tile p{font-size:17px}
+  .pc h3{font-size:32px}
+  .pstep{grid-template-columns:78px 1fr;gap:18px;padding:38px 0}.pstep .n{font-size:64px}.pstep h3{font-size:30px}.pstep p{font-size:18px}
+  .proc .left p{font-size:19px}
+  .stats b{font-size:clamp(54px,15vw,84px)}.stats span{font-size:15px}
+  .plan h3{font-size:34px}
+  .faq summary{font-size:21px;padding:26px 0}
+  .cta h2{font-size:clamp(58px,17vw,110px)}.cta p{font-size:19px}
+}
 </style>
 </head>
 <body class="loading">
@@ -1150,11 +1210,39 @@ const threeFrame = (function scene3d(){
     const l2 = new THREE.Line(ringGeo, new THREE.LineBasicMaterial({ color: M, transparent: true, opacity: .2 })); l2.scale.setScalar(r * .72); l2.rotation.z = 1;
     const ticks = new THREE.Group(); for (let k = 0; k < 8; k++) { const t = new THREE.Mesh(new THREE.BoxGeometry(.5, .14, .14), new THREE.MeshBasicMaterial({ color: M, transparent: true, opacity: .8 })); const a = k / 8 * 6.2832; t.position.set(Math.cos(a) * r, Math.sin(a) * r, 0); t.rotation.z = a; ticks.add(t); }
     g.add(l1, l2, ticks); g.position.set(px(z), py(z), z); g.userData = { sp: (i % 2 ? 1 : -1) * (.08 + (i % 4) * .03) }; scene.add(g); rings.push(g); }
-  /* poliedros flotantes */
-  const geos = [new THREE.IcosahedronGeometry(1, 0), new THREE.OctahedronGeometry(1.1, 0), new THREE.BoxGeometry(1.5, 1.5, 1.5), new THREE.TetrahedronGeometry(1.3, 0), new THREE.TorusGeometry(1, .28, 6, 14)], objs = [];
-  for (let i = 0; i < (mob ? 12 : 22); i++) { const z = -4 - i * (LEN / 22) - Math.random() * 6, a = Math.random() * 6.2832, r = 4.5 + Math.random() * 6, sc = .8 + Math.random() * 1.5;
-    const m = new THREE.LineSegments(new THREE.EdgesGeometry(geos[i % geos.length]), new THREE.LineBasicMaterial({ color: i % 3 ? G : M, transparent: true, opacity: .75 })); m.scale.setScalar(sc);
-    m.position.set(px(z) + Math.cos(a) * r, py(z) + Math.sin(a) * r * .8, z); m.userData = { rx: (Math.random() - .5) * .6, ry: (Math.random() - .5) * .6, y0: m.position.y, ph: Math.random() * 6.28 }; scene.add(m); objs.push(m); }
+  /* logos de tecnología flotando */
+  function icon(kind){
+    const c = document.createElement("canvas"); c.width = c.height = 256; const x = c.getContext("2d");
+    x.translate(128, 128); x.lineWidth = 9; x.lineJoin = x.lineCap = "round"; x.strokeStyle = "#9ff0c4"; x.fillStyle = "#9ff0c4"; x.shadowColor = "#2fb573"; x.shadowBlur = 16;
+    x.textAlign = "center"; x.textBaseline = "middle";
+    const poly = pts => { x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.closePath(); };
+    const rr = (a, b, w, h, r) => { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); };
+    const shield = () => { poly([[-85, -95], [85, -95], [72, 65], [0, 100], [-72, 65]]); x.stroke(); };
+    const txt = (t, size, px, py) => { x.font = `800 ${size}px Arial, Helvetica, sans-serif`; x.fillText(t, px, py); };
+    if (kind === "html") { shield(); txt("5", 120, 0, 6); }
+    else if (kind === "css") { shield(); txt("3", 120, 0, 6); }
+    else if (kind === "js") { rr(-88, -88, 176, 176, 18); x.stroke(); x.textAlign = "right"; txt("JS", 84, 74, 52); }
+    else if (kind === "ts") { rr(-88, -88, 176, 176, 18); x.stroke(); x.textAlign = "right"; txt("TS", 84, 74, 52); }
+    else if (kind === "node") { poly([0, 1, 2, 3, 4, 5].map(k => [Math.cos(1.5708 + k * 1.0472) * 96, Math.sin(1.5708 + k * 1.0472) * 96])); x.stroke(); txt("JS", 70, 0, 4); }
+    else if (kind === "git") { poly([[0, -96], [96, 0], [0, 96], [-96, 0]]); x.stroke(); x.beginPath(); x.moveTo(-26, 26); x.lineTo(-26, -34); x.moveTo(-26, 0); x.lineTo(30, -6); x.stroke(); [[-26, 26], [-26, -34], [32, -6]].forEach(p => { x.beginPath(); x.arc(p[0], p[1], 14, 0, 6.3); x.fill(); }); }
+    else if (kind === "wa") { x.beginPath(); x.arc(0, -4, 84, .55, 5.85 + 0); x.lineTo(-70, 92); x.lineTo(-56, 46); x.closePath(); x.stroke(); x.beginPath(); x.moveTo(-34, -42); x.quadraticCurveTo(-46, -6, -8, 34); x.quadraticCurveTo(26, 62, 46, 48); x.lineTo(32, 22); x.lineTo(14, 30); x.quadraticCurveTo(-8, 16, -18, -10); x.lineTo(-8, -26); x.closePath(); x.fill(); }
+    else if (kind === "figma") { x.lineWidth = 8; rr(-60, -100, 60, 66, 30); x.stroke(); rr(0, -100, 60, 66, 30); x.stroke(); rr(-60, -34, 60, 66, 30); x.stroke(); x.beginPath(); x.arc(30, -1, 30, 0, 6.3); x.stroke(); x.beginPath(); x.moveTo(-60, 32); x.arc(-30, 62, 30, 3.1416, 0, true); x.lineTo(0, 32); x.stroke(); }
+    else if (kind === "db") { [-62, 0, 62].forEach((y, i) => { x.beginPath(); x.ellipse(0, y, 78, 26, 0, i ? 0 : 0, i ? 3.1416 : 6.2832); x.stroke(); }); x.beginPath(); x.moveTo(-78, -62); x.lineTo(-78, 62); x.moveTo(78, -62); x.lineTo(78, 62); x.stroke(); }
+    else if (kind === "vercel") { poly([[0, -88], [96, 74], [-96, 74]]); x.fill(); }
+    else if (kind === "tw") { [-34, 34].forEach(y => { x.beginPath(); x.moveTo(-92, y + 6); x.bezierCurveTo(-72, y - 50, -34, y - 50, -6, y - 14); x.bezierCurveTo(22, y + 22, 54, y + 22, 92, y - 28); x.stroke(); }); }
+    else if (kind === "code") { txt("</>", 118, 0, 4); }
+    else if (kind === "next") { x.beginPath(); x.arc(0, 0, 92, 0, 6.3); x.stroke(); txt("N", 100, 0, 6); }
+    else { const st = (r) => { x.beginPath(); x.moveTo(0, -r); x.quadraticCurveTo(r * .12, -r * .12, r, 0); x.quadraticCurveTo(r * .12, r * .12, 0, r); x.quadraticCurveTo(-r * .12, r * .12, -r, 0); x.quadraticCurveTo(-r * .12, -r * .12, 0, -r); x.closePath(); }; st(92); x.stroke(); x.save(); x.translate(62, -64); st(30); x.fill(); x.restore(); }
+    return new THREE.CanvasTexture(c);
+  }
+  const KINDS = ["html", "css", "js", "ts", "node", "git", "wa", "figma", "db", "vercel", "tw", "code", "ai", "next"], objs = [], planeGeo = new THREE.PlaneGeometry(1, 1), ellGeo = (() => { const p = []; for (let i = 0; i <= 80; i++) { const a = i / 80 * 6.2832; p.push(new THREE.Vector3(Math.cos(a) * 1.9, Math.sin(a) * .72, 0)); } return new THREE.BufferGeometry().setFromPoints(p); })();
+  const total = mob ? 13 : 24; let ki = 0;
+  for (let i = 0; i < total; i++) {
+    const z = -4 - i * (LEN / total) - Math.random() * 6, a = Math.random() * 6.2832, r = 7 + Math.random() * 6; let o;
+    if (i % 6 === 3) { o = new THREE.Group(); [0, 1.0472, 2.0944].forEach(rz => { const l = new THREE.Line(ellGeo, new THREE.LineBasicMaterial({ color: M, transparent: true, opacity: .95 })); l.rotation.z = rz; o.add(l); }); o.add(new THREE.Mesh(new THREE.SphereGeometry(.26, 12, 12), new THREE.MeshBasicMaterial({ color: M }))); o.scale.setScalar(1.7); o.userData = { react: true }; }
+    else { const mat = new THREE.MeshBasicMaterial({ map: icon(KINDS[ki++ % KINDS.length]), transparent: true, opacity: .75, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending }); o = new THREE.Mesh(planeGeo, mat); o.scale.setScalar(3.4 + Math.random() * 1.2); o.userData = {}; }
+    o.position.set(px(z) + Math.cos(a) * r, py(z) + Math.sin(a) * r * .8, z); Object.assign(o.userData, { y0: o.position.y, ph: Math.random() * 6.28 }); scene.add(o); objs.push(o);
+  }
   /* K en 3D al final del viaje */
   const K = new THREE.Group(), u = .15, boxes = [[9 * u, 40 * u, 6 * u, -13.5 * u, 0, 0], [27.6 * u, 9 * u, 6 * u, 6.5 * u, 10 * u, .812], [27.6 * u, 9 * u, 6 * u, 6.5 * u, -10 * u, -.812]];
   boxes.forEach(([w, h, d, x, y, rz]) => { const bg = new THREE.BoxGeometry(w, h, d), m = new THREE.Mesh(bg, new THREE.MeshBasicMaterial({ color: G, transparent: true, opacity: .16, depthWrite: false })), e = new THREE.LineSegments(new THREE.EdgesGeometry(bg), new THREE.LineBasicMaterial({ color: M })); const gp = new THREE.Group(); gp.add(m, e); gp.position.set(x, y, 0); gp.rotation.z = rz; K.add(gp); });
@@ -1171,7 +1259,7 @@ const threeFrame = (function scene3d(){
     cam.lookAt(px(tz) + mxn * 4, py(tz) - myn * 2.4, tz); cam.rotateZ(Math.sin(zc * 14) * .07 + mxn * .06);
     cam.fov = 62 + vel * .4; cam.updateProjectionMatrix();
     for (const g of rings) g.rotation.z += g.userData.sp * .01;
-    for (const o of objs) { o.rotation.x += o.userData.rx * .01; o.rotation.y += o.userData.ry * .01; o.position.y = o.userData.y0 + Math.sin(t + o.userData.ph) * .5; }
+    for (const o of objs) { if (o.userData.react) { o.rotation.y += .012; o.rotation.x = .5; } else o.rotation.y = Math.sin(t * .5 + o.userData.ph) * .85; o.position.y = o.userData.y0 + Math.sin(t + o.userData.ph) * .5; }
     K.rotation.y = Math.sin(t * .6) * .5 + (1 - clamp(zc * 5 - 4, 0, 1)) * 1.2; K.rotation.x = Math.sin(t * .4) * .12; halo.rotation.z = t * .2; pts.rotation.z = t * .004;
     R.render(scene, cam);
   };
@@ -1181,7 +1269,7 @@ const threeFrame = (function scene3d(){
 const depthFrame = (function depth(){
   if (reduce) return () => {};
   const els = $$(".sec-head,.tile,.pc,.plan,.pstep,.scard,.stats .wrap>div,#faq details,.cta h2"), base = [], cache = [];
-  els.forEach(e => { e.parentElement.style.perspective = "1300px"; });
+  els.forEach(e => { e.parentElement.style.perspective = "2200px"; });
   function measure(){ els.forEach(e => { e.style.rotate = ""; e.style.translate = ""; e.style.scale = ""; }); els.forEach((e, i) => { const r = e.getBoundingClientRect(); base[i] = { c: r.top + window.scrollY + r.height / 2 }; cache[i] = ""; }); }
   measure(); window.addEventListener("load", () => setTimeout(measure, 300)); window.addEventListener("resize", measure); setTimeout(measure, 2500);
   let n = 0, lh = document.documentElement.scrollHeight;
@@ -1190,7 +1278,7 @@ const depthFrame = (function depth(){
     const vh = innerHeight, y = window.scrollY;
     for (let i = 0; i < els.length; i++) {
       const t = clamp((base[i].c - y - vh / 2) / (vh / 2), -1.4, 1.4), a = Math.abs(t), e = els[i];
-      let v; if (a < .02) v = ""; else v = (t > 0 ? t * 17 : t * 7).toFixed(1) + "|" + (a * a * 150).toFixed(0) + "|" + (1 - a * .035).toFixed(3);
+      let v; if (a < .02) v = ""; else v = (t > 0 ? t * 17 : t * 7).toFixed(1) + "|" + (a * a * 80).toFixed(0) + "|" + (1 - a * .035).toFixed(3);
       if (v === cache[i]) continue; cache[i] = v;
       if (!v) { e.style.rotate = ""; e.style.translate = ""; e.style.scale = ""; continue; }
       const [rx, tz, sc] = v.split("|"); e.style.rotate = `1 0 0 ${rx}deg`; e.style.translate = `0 0 -${tz}px`; e.style.scale = sc;
