@@ -6,7 +6,7 @@
 <title>Kuvo — Estudio digital</title>
 <meta name="description" content="Kuvo diseña y construye sitios web, tiendas en línea, bots de WhatsApp, sistemas a medida y automatizaciones con IA. Honduras y toda Latinoamérica.">
 <meta name="theme-color" content="#070b09">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232fb573'/%3E%3Crect x='14' y='12' width='9' height='40' fill='%23070b09'/%3E%3Cpath d='M29 12l19 20-19 20' fill='none' stroke='%23070b09' stroke-width='9'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050a07'/%3E%3Cg fill='%2319f5a8'%3E%3Crect x='9.5' y='11.5' width='9.5' height='41'/%3E%3Cpolygon points='23%2C15 29.6%2C9 55%2C32 29.6%2C55 23%2C49 40%2C32'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -86,7 +86,7 @@ header.hide{transform:translateY(-110%)}
 header.solid{border-bottom-color:var(--line);background:rgba(7,11,9,.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 header .wrap{display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:14px;font-weight:700;font-size:32px;letter-spacing:-.03em;line-height:1}
-.brand .mk{width:46px;height:46px;opacity:0;transition:opacity .35s}
+.brand .mk{width:46px;height:46px;filter:drop-shadow(0 0 7px rgba(25,245,168,.85));animation:kglow2 3s ease-in-out infinite;opacity:0;transition:opacity .35s}
 body.logo .brand .mk{opacity:1}
 .brand span{opacity:0;transition:opacity .6s .2s}body.ready .brand span{opacity:1}
 nav.links{display:flex;gap:30px;font-family:var(--mono);font-size:13px;letter-spacing:.04em;font-weight:400;counter-reset:n}
@@ -190,11 +190,11 @@ body.ready .up.d1{transition-delay:.3s}body.ready .up.d2{transition-delay:.45s}b
 .hero::before{content:"";position:absolute;left:0;right:0;bottom:0;height:55%;background:radial-gradient(60% 90% at 50% 100%,rgba(47,181,115,.16),transparent 70%);pointer-events:none}
 #hc{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .hero-vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(46% 40% at 50% 48%,rgba(7,11,9,.78),transparent 100%)}
-.hero-c{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:92px 0 18px}
+.hero-c{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:84px 0 16px}
 .pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 10px;border:1px solid var(--line-2);border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:22px;background:rgba(238,240,233,.04);backdrop-filter:blur(8px)}
 .pill i{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 0 rgba(47,181,115,.6);animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,181,115,.6)}70%{box-shadow:0 0 0 10px rgba(47,181,115,0)}100%{box-shadow:0 0 0 0 rgba(47,181,115,0)}}
-h1{font-size:clamp(46px,min(9vw,13vh),150px);line-height:.9;letter-spacing:-.045em;font-weight:700;font-variation-settings:"opsz" 96;text-shadow:0 0 50px rgba(7,11,9,.9)}
+h1{font-size:clamp(46px,min(9vw,10.5vh),150px);line-height:.9;letter-spacing:-.045em;font-weight:700;font-variation-settings:"opsz" 96;text-shadow:0 0 50px rgba(7,11,9,.9)}
 h1 .ln{display:block;overflow:hidden;padding:.08em .06em .06em;margin:-.04em 0}
 h1 .ln>span{display:block;transform:translateY(112%);transition:transform 1.2s var(--out)}
 body.ready h1 .ln>span{transform:none}
@@ -456,6 +456,15 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
 .wa-float:hover span{opacity:1;transform:translateY(-50%)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+
+/* ───────── LOGO NEÓN ───────── */
+.hmark{position:relative;width:min(108px,13vh);height:min(108px,13vh);margin-bottom:12px;display:grid;place-items:center}
+.hmark svg{position:relative;width:100%;height:100%;filter:drop-shadow(0 0 8px rgba(25,245,168,.9)) drop-shadow(0 0 30px rgba(25,245,168,.55));animation:kglow 3s ease-in-out infinite}
+.hglow{position:absolute;inset:-90%;border-radius:50%;background:radial-gradient(circle,rgba(25,245,168,.34),rgba(25,245,168,0) 60%);animation:kpulse 3s ease-in-out infinite;pointer-events:none}
+@keyframes kglow{50%{filter:drop-shadow(0 0 14px rgba(25,245,168,1)) drop-shadow(0 0 56px rgba(25,245,168,.85))}}
+@keyframes kglow2{50%{filter:drop-shadow(0 0 12px rgba(25,245,168,1))}}
+@keyframes kpulse{50%{transform:scale(1.22);opacity:.7}}
+
 /* ───────── TIPOGRAFÍA GRANDE ───────── */
 body{font-size:19px}
 .mono{font-size:13px}
@@ -518,6 +527,11 @@ footer{font-size:17px}
 </style>
 </head>
 <body class="loading">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<linearGradient id="kg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22ffb0"/><stop offset=".5" stop-color="#0a8450"/><stop offset="1" stop-color="#17e895"/></linearGradient>
+<symbol id="kglyph" viewBox="-14 -14 398 420"><rect x="0" y="19" width="80" height="348" fill="url(#kg)" stroke="#6dffc6" stroke-width="3.5"/><polygon points="111,52 165,0 370,194 165,392 109,339 256,194" fill="url(#kg)" stroke="#6dffc6" stroke-width="3.5" stroke-linejoin="miter"/></symbol>
+</defs></svg>
+
 
 <div id="loader" aria-hidden="true">
   <div class="ld-ui">
@@ -590,7 +604,7 @@ footer{font-size:17px}
 <header id="hdr">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Kuvo">
-      <svg class="mk" id="mk" viewBox="0 0 64 64"><rect class="b" width="64" height="64" rx="16"/><rect class="f" x="14" y="12" width="9" height="40"/><path class="s" d="M29 12l19 20-19 20" fill="none" stroke-width="9"/></svg>
+      <svg class="mk" id="mk" viewBox="0 0 64 64"><use href="#kglyph" width="64" height="64"/></svg>
       <span>Kuvo</span>
     </a>
     <nav class="links">
@@ -621,6 +635,7 @@ footer{font-size:17px}
   <div class="fchip c4"><i>📅</i><div>Cita agendada<small>hoy · 3:30 pm</small></div></div>
   <div class="hero-c">
     <div class="wrap" style="display:flex;flex-direction:column;align-items:center">
+      <div class="hmark up"><span class="hglow"></span><svg viewBox="0 0 64 64" aria-label="Kuvo"><use href="#kglyph" width="64" height="64"/></svg></div>
       <div class="pill up"><i></i>Aceptando proyectos<span class="hm"> · Noviembre 2026</span></div>
       <h1>
         <span class="ln"><span>Tu negocio,</span></span>
@@ -867,7 +882,7 @@ document.addEventListener("mouseleave", () => mouseIn = false);
 /* ───── formas (en un lienzo de 64×64) ───── */
 function rr(o, x, y, w, h, r){ o.beginPath(); o.moveTo(x + r, y); o.arcTo(x + w, y, x + w, y + h, r); o.arcTo(x + w, y + h, x, y + h, r); o.arcTo(x, y + h, x, y, r); o.arcTo(x, y, x + w, y, r); o.closePath(); }
 const SHAPES = {
-  k: o => { o.lineJoin = "miter"; o.fillRect(14, 12, 9, 40); o.lineWidth = 9; o.beginPath(); o.moveTo(29, 12); o.lineTo(48, 32); o.lineTo(29, 52); o.stroke(); },
+  k: o => { o.fillRect(7.5, 8.5, 10.6, 46.2); o.beginPath(); o.moveTo(22.2, 12.9); o.lineTo(29.4, 6); o.lineTo(56.6, 31.7); o.lineTo(29.4, 58); o.lineTo(22, 51); o.lineTo(41.5, 31.7); o.closePath(); o.fill(); },
   web: o => { o.lineWidth = 4.5; rr(o, 5, 9, 54, 46, 6); o.stroke(); o.beginPath(); o.moveTo(5, 20); o.lineTo(59, 20); o.stroke(); o.fillRect(13, 27, 24, 5); o.fillRect(13, 36, 32, 3); o.fillRect(13, 43, 16, 6); o.fillRect(41, 27, 10, 10); },
   chat: o => { rr(o, 5, 8, 54, 38, 11); o.fill(); o.beginPath(); o.moveTo(14, 45); o.lineTo(10, 58); o.lineTo(27, 45); o.closePath(); o.fill(); o.globalCompositeOperation = "destination-out"; [22, 32, 42].forEach(x => { o.beginPath(); o.arc(x, 27, 3.6, 0, 7); o.fill(); }); o.globalCompositeOperation = "source-over"; },
   dash: o => { o.lineWidth = 4.5; rr(o, 5, 7, 54, 50, 6); o.stroke(); o.fillRect(13, 38, 7, 12); o.fillRect(24, 30, 7, 20); o.fillRect(35, 22, 7, 28); o.fillRect(46, 14, 7, 36); },
