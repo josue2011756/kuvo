@@ -49,7 +49,8 @@ em.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:
 #bgc{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.45}
 #g3{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 /* loader */
-#loader{position:fixed;inset:0;z-index:1000;background:var(--bg);transition:opacity 1s var(--ease)}
+#loader{position:fixed;inset:0;z-index:1000;background:radial-gradient(70% 60% at 50% 50%,#0d2018 0,var(--bg) 78%);transition:opacity 1s var(--ease)}
+#loader::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(159,240,196,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(159,240,196,.05) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(60% 55% at 50% 50%,#000,transparent);-webkit-mask-image:radial-gradient(60% 55% at 50% 50%,#000,transparent)}
 #loader.out{opacity:0}#loader.done{display:none}
 #lc{position:fixed;inset:0;width:100%;height:100%;z-index:1001;pointer-events:none;transition:opacity .4s}
 #lc.fade{opacity:0}#lc.off{display:none}
@@ -57,12 +58,16 @@ em.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:
 #loader.out .ld-ui{opacity:0}
 .ld-stat{position:absolute;left:28px;top:34px;display:flex;align-items:center;gap:10px;color:var(--acc-2)}
 .ld-stat::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acc);animation:pulse 1.2s infinite}
+.ld-c{position:absolute;width:26px;height:26px;border:1.5px solid rgba(159,240,196,.55)}
+.ld-c.tl{left:22px;top:84px;border-right:0;border-bottom:0}.ld-c.tr{right:22px;top:84px;border-left:0;border-bottom:0}.ld-c.bl{left:22px;bottom:150px;border-right:0;border-top:0}.ld-c.br{right:22px;bottom:150px;border-left:0;border-top:0}
+.ld-bar{position:absolute;left:28px;right:28px;top:68px;height:1px;background:rgba(238,240,233,.12)}
+.ld-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc-2));box-shadow:0 0 12px var(--acc)}
 .ld-meta{position:absolute;left:28px;right:28px;bottom:26px;display:flex;justify-content:space-between;align-items:flex-end}
 .ld-meta .n{font-family:var(--serif);font-style:italic;font-size:clamp(56px,9vw,120px);line-height:.8;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .ld-meta .n small{font-size:.35em;font-family:var(--mono);font-style:normal;letter-spacing:.2em;color:var(--acc-2);vertical-align:top;margin-left:8px}
 .ld-meta .r{text-align:right;line-height:1.7;opacity:.55}
 .ld-skip{position:absolute;right:28px;top:24px;pointer-events:auto;background:none;border:1px solid var(--line-2);color:var(--fg);opacity:.75;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:10px 16px;border-radius:999px;cursor:pointer}
-@media(max-width:700px){.ld-meta{left:18px;right:18px;bottom:20px}.ld-skip{right:18px;top:18px}.ld-stat{left:18px;top:30px}}
+@media(max-width:700px){.ld-bar{left:18px;right:18px}.ld-c.tl,.ld-c.bl{left:14px}.ld-c.tr,.ld-c.br{right:14px}.ld-c.bl,.ld-c.br{bottom:130px}.ld-meta{left:18px;right:18px;bottom:20px}.ld-skip{right:18px;top:18px}.ld-stat{left:18px;top:30px}}
 
 /* cursor / progress */
 .cur{position:fixed;left:0;top:0;z-index:960;pointer-events:none;mix-blend-mode:difference}
@@ -517,6 +522,8 @@ footer{font-size:17px}
 <div id="loader" aria-hidden="true">
   <div class="ld-ui">
     <div class="ld-stat mono" id="ldS">Despertando nanobots</div>
+    <i class="ld-c tl"></i><i class="ld-c tr"></i><i class="ld-c bl"></i><i class="ld-c br"></i>
+    <div class="ld-bar"><i id="ldBar"></i></div>
     <div class="ld-meta">
       <div class="n"><span id="ldN">000</span><small>%</small></div>
       <div class="r mono">Estudio digital<br>Honduras · 2026</div>
@@ -896,32 +903,38 @@ function sampleText(txt, W, H, cx, cy, fs, step){
   return out;
 }
 (function loader(){
-  const L = $("#loader"), cv = $("#lc"), nEl = $("#ldN"), sEl = $("#ldS"), mk = $("#mk"), F = new Field(cv);
-  let start = null, phase = "load", gAt = 0, done = false, fontsOK = false, lbl = "";
-  const T = { morph: 2.6, glide: 3.7 };
+  const L = $("#loader"), cv = $("#lc"), nEl = $("#ldN"), sEl = $("#ldS"), barEl = $("#ldBar"), mk = $("#mk"), F = new Field(cv);
+  let start = null, phase = "load", gAt = 0, done = false, fontsOK = false, lbl = "", lblAt = 0, bb = null;
+  const T = { asm: .25, sweep: 2.0, morph: 2.9, glide: 3.95 };
   const eio = t => { t = clamp(t, 0, 1); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
   Promise.race([document.fonts.load('800 120px "Bricolage Grotesque"'), new Promise(r => setTimeout(r, 1500))]).then(() => fontsOK = true, () => fontsOK = true);
   const at = (arr, i, n) => arr[Math.min(arr.length - 1, Math.floor(i * arr.length / n))];
   function build(){
     if (!fontsOK) return false;
     F.size(innerWidth, innerHeight); const W = F.W, H = F.H; if (W < 2 || H < 2) return false;
-    const mob = W < 700, fs = mob ? Math.min(W * .27, H * .2) : Math.min(W * .21, H * .38), step = mob ? 2.7 : 3.5;
+    const mob = W < 700, fs = mob ? Math.min(W * .27, H * .2) : Math.min(W * .21, H * .38), step = mob ? 2.8 : 3.4;
     const tp = sampleText("KUVO", W, H, W / 2, H / 2, fs, step); if (!tp.length) return false;
     const s = Math.min(W, H) * (mob ? .5 : .4), kp = sample(SHAPES.k, W, H, W / 2, H / 2, s, step * 1.1); if (!kp.length) return false;
-    const n = Math.min(4200, Math.max(tp.length, kp.length));
-    let x0 = 1e9, x1 = -1e9; tp.forEach(q => { if (q[0] < x0) x0 = q[0]; if (q[0] > x1) x1 = q[0]; });
-    F.P = [];
+    const n = Math.min(mob ? 3200 : 4800, Math.max(tp.length, kp.length));
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; tp.forEach(q => { x0 = Math.min(x0, q[0]); x1 = Math.max(x1, q[0]); y0 = Math.min(y0, q[1]); y1 = Math.max(y1, q[1]); }); bb = { x0, x1, y0, y1 };
+    F.P = []; const Rm = Math.min(W, H) * (mob ? .46 : .5);
     for (let i = 0; i < n; i++) {
-      const a = Math.random() * Math.PI * 2, r = Math.max(W, H) * (.55 + Math.random() * .55), sx = W / 2 + Math.cos(a) * r, sy = H / 2 + Math.sin(a) * r;
-      const b = at(tp, i, n), c = at(kp, i, n), qa = (Math.random() - .5) * .8, qb = (Math.random() - .5) * .8;
-      F.P.push({ x: sx, y: sy, vx: 0, vy: 0, sx, sy, bx: b[0], by: b[1], cx: c[0], cy: c[1], dx: 0, dy: 0, gx: 0, gy: 0,
-        q1x: -(b[1] - sy) * qa, q1y: (b[0] - sx) * qa, q2x: -(c[1] - b[1]) * qb, q2y: (c[0] - b[0]) * qb,
-        rx: (b[0] - x0) / Math.max(1, x1 - x0), sz: step * (.42 + Math.random() * .32), c: Math.random() < .28, ph: Math.random() * 6.28, dl: Math.random() });
+      const b = at(tp, i, n), c = at(kp, i, n), rr = .35 + Math.pow(Math.random(), .8) * .75;
+      F.P.push({ x: W / 2, y: H / 2, vx: 0, vy: 0, bx: b[0], by: b[1], cx: c[0], cy: c[1], dx: 0, dy: 0, gx: 0, gy: 0,
+        a0: Math.random() * 6.2832, om: (.8 + Math.random() * .7) * (Math.random() < .5 ? 1 : 1), r0: rr * Rm * (Math.random() < .5 ? 1 : 1), th: (Math.random() - .5) * .5, zz: Math.random() * 2 - 1,
+        sw: (Math.random() < .5 ? -1 : 1) * (1.6 + Math.random() * 1.8), q2: (Math.random() - .5) * .8,
+        rx: (b[0] - x0) / Math.max(1, x1 - x0), sz: step * (.4 + Math.random() * .34), c: Math.random() < .3, ph: Math.random() * 6.28, dl: Math.random(), k: 0, hot: 0, dep: 1 });
     }
+    /* malla: cada bot se une a sus vecinos de la letra */
+    const cell = step * 1.7, grid = new Map(), key = (a, b) => a + "," + b;
+    F.P.forEach((p, i) => { const k = key(Math.floor(p.bx / cell), Math.floor(p.by / cell)); (grid.get(k) || grid.set(k, []).get(k)).push(i); });
+    F.links = [];
+    F.P.forEach((p, i) => { let cnt = 0; const cx = Math.floor(p.bx / cell), cy = Math.floor(p.by / cell);
+      for (let gx = cx - 1; gx <= cx + 1 && cnt < 2; gx++) for (let gy = cy - 1; gy <= cy + 1 && cnt < 2; gy++) { const l = grid.get(key(gx, gy)); if (!l) continue; for (const j of l) { if (j <= i || cnt >= 2) continue; const q = F.P[j], d = Math.hypot(q.bx - p.bx, q.by - p.by); if (d > .8 && d < cell) { F.links.push(i, j); cnt++; } } } });
     return true;
   }
   function glide(){
-    if (phase !== "load") return; phase = "glide"; gAt = performance.now(); nEl.textContent = "100"; setLabel("Listo");
+    if (phase !== "load") return; phase = "glide"; gAt = performance.now(); nEl.textContent = "100"; barEl.style.width = "100%"; setLabel("Listo · " + F.P.length.toLocaleString("es") + " nanobots");
     const r = mk.getBoundingClientRect(), pts = sample(SHAPES.k, F.W, F.H, r.left + r.width / 2, r.top + r.height / 2, r.width * .92, 1), n = F.P.length;
     F.P.forEach((p, i) => { const q = at(pts, i, n); p.gx = p.x; p.gy = p.y; p.dx = q[0]; p.dy = q[1]; });
     L.classList.add("out"); document.body.classList.remove("loading"); document.body.classList.add("ready"); lenis && lenis.start(); window.scrollTo(0, 0);
@@ -933,37 +946,53 @@ function sampleText(txt, W, H, cx, cy, fs, step){
   function frame(now){
     if (done) return;
     if (!F.P.length && !build()) { requestAnimationFrame(frame); return; }
-    if (!start) start = now; const t = (now - start) / 1000, g = (now - gAt) / 1000, c = F.ctx, P = F.P;
+    if (!start) start = now; const t = (now - start) / 1000, g = (now - gAt) / 1000, c = F.ctx, P = F.P, W = F.W, H = F.H, cx = W / 2, cy = H / 2;
+    let settled = 0;
     if (phase === "load") {
-      nEl.textContent = String(Math.round(eio(t / 3.5) * 100)).padStart(3, "0");
-      setLabel(t < 1.9 ? "Ensamblando nombre" : t < T.morph ? "Nombre listo" : "Compilando marca");
+      const pr = clamp(t / T.glide, 0, 1); nEl.textContent = String(Math.round(eio(pr) * 100)).padStart(3, "0"); barEl.style.width = (eio(pr) * 100).toFixed(1) + "%";
       if (t > T.glide) glide();
     }
     for (const p of P) {
-      let x, y, hot = 0; const ox = p.x, oy = p.y;
+      let x, y, hot = 0, dep = 1; const ox = p.x, oy = p.y;
       if (phase === "load") {
+        /* órbita del enjambre (disco inclinado) */
+        const a = p.a0 + p.om * t, ca = Math.cos(a), sa = Math.sin(a), rx = ca * p.r0, ry = sa * p.r0 * .42 + p.zz * p.r0 * .1, tl = -.38, sx = cx + rx * Math.cos(tl) - ry * Math.sin(tl), sy = cy + rx * Math.sin(tl) + ry * Math.cos(tl);
+        dep = .65 + .55 * (sa + 1) / 2;
         if (t < T.morph) {
-          const k = easeOut((t - .1 - p.dl * .8) / 1.3), w = k * (1 - k) * 4;
-          x = p.sx + (p.bx - p.sx) * k + p.q1x * w; y = p.sy + (p.by - p.sy) * k + p.q1y * w;
-          if (t > 1.9) { x += Math.sin(t * 5 + p.ph) * .9; y += Math.cos(t * 4 + p.ph) * .9; const sw = (t - 1.9) / .6 * 1.3 - .15; if (Math.abs(p.rx - sw) < .07) hot = 1; }
+          const k = easeOut((t - T.asm - p.dl * .9) / 1.45); p.k = k;
+          const th = (1 - k) * p.sw, cs = Math.cos(th), sn = Math.sin(th), vx = (sx - p.bx) * (1 - k), vy = (sy - p.by) * (1 - k);
+          x = p.bx + vx * cs - vy * sn; y = p.by + vx * sn + vy * cs; dep = dep * (1 - k) + k;
+          if (k >= 1) { x += Math.sin(t * 5 + p.ph) * .7; y += Math.cos(t * 4 + p.ph) * .7; settled++; }
+          const sn2 = clamp((k - .86) / .14, 0, 1); hot = sn2 * (1 - sn2) * 4 > .5 ? 1 : 0;
+          if (t > T.sweep && t < T.morph - .1) { const sw = (t - T.sweep) / .75 * 1.3 - .15; if (Math.abs(p.rx - sw) < .06) hot = 1; }
         } else {
-          const k = eio((t - T.morph - p.rx * .35) / .75), w = k * (1 - k) * 4;
-          x = p.bx + (p.cx - p.bx) * k + p.q2x * w; y = p.by + (p.cy - p.by) * k + p.q2y * w;
+          const k = eio((t - T.morph - p.rx * .3) / .75), w = k * (1 - k) * 4;
+          x = p.bx + (p.cx - p.bx) * k + (-(p.cy - p.by)) * p.q2 * w; y = p.by + (p.cy - p.by) * k + (p.cx - p.bx) * p.q2 * w; p.k = 1; settled++;
           if (k >= 1) { x += Math.sin(t * 5 + p.ph) * .7; y += Math.cos(t * 4 + p.ph) * .7; }
         }
       } else {
         const k = eio((g - p.dl * .25) / .95), w = k * (1 - k) * 4;
         x = p.gx + (p.dx - p.gx) * k + (p.cy - p.cx) * .12 * w; y = p.gy + (p.dy - p.gy) * k - (p.cx - p.cy) * .12 * w;
       }
-      let dvx = x - ox, dvy = y - oy; const dm = Math.hypot(dvx, dvy); if (dm > 9) { dvx *= 9 / dm; dvy *= 9 / dm; } p.vx = dvx; p.vy = dvy; p.x = x; p.y = y; p.h = hot; p.mv = p.vx * p.vx + p.vy * p.vy > 2.6;
+      let dvx = x - ox, dvy = y - oy; const dm = Math.hypot(dvx, dvy); if (dm > 11) { dvx *= 11 / dm; dvy *= 11 / dm; }
+      p.vx = dvx; p.vy = dvy; p.x = x; p.y = y; p.hot = hot; p.dep = dep; p.mv = dvx * dvx + dvy * dvy > 2.2;
     }
-    c.clearRect(0, 0, F.W, F.H); c.lineCap = "round";
-    c.globalAlpha = .85; c.strokeStyle = "#9ff0c4"; c.lineWidth = 1.5; c.beginPath();
-    for (const p of P) if (p.mv) { c.moveTo(p.x - p.vx * 2.4, p.y - p.vy * 2.4); c.lineTo(p.x, p.y); }
-    c.stroke(); c.globalAlpha = 1;
-    c.fillStyle = "#eef0e9"; c.beginPath(); for (const p of P) if (!p.mv && !p.c && !p.h) c.rect(p.x - p.sz / 2, p.y - p.sz / 2, p.sz, p.sz); c.fill();
-    c.fillStyle = "#2fb573"; c.beginPath(); for (const p of P) if (!p.mv && p.c && !p.h) c.rect(p.x - p.sz / 2, p.y - p.sz / 2, p.sz, p.sz); c.fill();
-    c.fillStyle = "#c9ffe2"; c.shadowColor = "#2fb573"; c.shadowBlur = 10; c.beginPath(); for (const p of P) if (p.h) c.rect(p.x - p.sz, p.y - p.sz, p.sz * 2, p.sz * 2); c.fill(); c.shadowBlur = 0;
+    /* estelas: se desvanece poco a poco en lugar de borrar */
+    c.globalCompositeOperation = "destination-out"; c.fillStyle = `rgba(0,0,0,${phase === "load" && t < T.sweep ? .17 : .3})`; c.fillRect(0, 0, W, H);
+    c.globalCompositeOperation = "lighter"; c.lineCap = "round";
+    /* malla de la palabra */
+    if (phase === "load" && F.links) { const la = clamp((t - 1.5) / .8, 0, 1) * (1 - clamp((t - T.morph) / .35, 0, 1)); if (la > .01) { c.globalAlpha = la * (.22 + .06 * Math.sin(t * 4)); c.strokeStyle = "#9ff0c4"; c.lineWidth = 1; c.beginPath(); const Lk = F.links; for (let i = 0; i < Lk.length; i += 2) { const a = P[Lk[i]], b = P[Lk[i + 1]]; if (a.k < .98 || b.k < .98) continue; c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); } c.stroke(); } }
+    /* nanobots en vuelo: líneas brillantes */
+    c.globalAlpha = t < 1.4 && phase === "load" ? .5 : .85; c.strokeStyle = "#9ff0c4"; c.lineWidth = t < 1.4 && phase === "load" ? 1 : 1.5; c.beginPath();
+    const sk = (t < 1.4 || t > T.morph) && phase === "load" ? 1.3 : 2.6; for (const p of P) if (p.mv) { c.moveTo(p.x - p.vx * sk, p.y - p.vy * sk); c.lineTo(p.x, p.y); } c.stroke();
+    /* nanobots posados */
+    c.globalAlpha = .9; c.fillStyle = "#eef0e9"; c.beginPath(); for (const p of P) if (!p.mv && !p.c && !p.hot) { const z = p.sz * p.dep; c.rect(p.x - z / 2, p.y - z / 2, z, z); } c.fill();
+    c.fillStyle = "#2fb573"; c.globalAlpha = 1; c.beginPath(); for (const p of P) if (!p.mv && p.c && !p.hot) { const z = p.sz * p.dep * 1.1; c.rect(p.x - z / 2, p.y - z / 2, z, z); } c.fill();
+    /* destellos al encajar y barrido de luz */
+    c.globalAlpha = 1; c.fillStyle = "#d6fff0"; c.shadowColor = "#2fb573"; c.shadowBlur = 14; c.beginPath(); for (const p of P) if (p.hot) { const z = p.sz * 1.9; c.rect(p.x - z / 2, p.y - z / 2, z, z); } c.fill(); c.shadowBlur = 0;
+    if (phase === "load" && bb && t > T.sweep && t < T.morph - .05) { const sx = bb.x0 + ((t - T.sweep) / .75 * 1.3 - .15) * (bb.x1 - bb.x0), gr = c.createLinearGradient(sx - 40, 0, sx + 40, 0); gr.addColorStop(0, "rgba(47,181,115,0)"); gr.addColorStop(.5, "rgba(159,240,196,.2)"); gr.addColorStop(1, "rgba(47,181,115,0)"); c.fillStyle = gr; c.fillRect(sx - 40, bb.y0 - 50, 80, bb.y1 - bb.y0 + 100); }
+    c.globalAlpha = 1; c.globalCompositeOperation = "source-over";
+    if (phase === "load") { setLabel((t < T.asm ? "Despertando nanobots" : t < T.sweep ? "Ensamblando estructura" : t < T.morph ? "Estructura lista" : "Compilando marca") + (W > 700 ? " · " + (Math.round(settled / 10) * 10).toLocaleString("es") + " / " + P.length.toLocaleString("es") : "")); }
     requestAnimationFrame(frame);
   }
   $("#ldSkip").addEventListener("click", glide);
