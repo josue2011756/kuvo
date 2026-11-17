@@ -624,8 +624,8 @@ h2.sp.in .w>span{transform:none}
       </div>
       <div class="fdone" id="fDone" hidden>
         <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="#9ff0c4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
-        <h3 style="padding:0">¡Excelente decisión! 🎉</h3>
-        <p>Tu proyecto ya va en camino. Abrimos WhatsApp con tus respuestas; si no se abrió, toca el botón de abajo.</p>
+        <h3 style="padding:0">¡Gracias por contarnos!</h3>
+        <p>Abrimos WhatsApp con tus respuestas. Si no se abrió, toca el botón de abajo.</p>
         <a class="btn acc" id="fOpen" href="#" target="_blank" rel="noopener"><span>Abrir WhatsApp</span></a>
       </div>
     </form>
@@ -638,8 +638,7 @@ h2.sp.in .w>span{transform:none}
 <div class="cur cur-wrap" id="curWrap"><div id="cur"></div></div>
 <div class="cur cur-wrap" id="curWrap2"><div id="curRing"></div></div>
 <div class="prog" id="prog"></div><i class="phead" id="phead"></i>
-<canvas id="fx"></canvas>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 
 <header id="hdr">
   <div class="wrap">
@@ -876,7 +875,7 @@ h2.sp.in .w>span{transform:none}
       <a class="btn lg" href="mailto:hola@kuvo.studio" data-mag><span>hola@kuvo.studio</span></a>
     </div>
     <div class="cinfo rv">
-      <a href="#" data-wa data-msg="Hola Kuvo, quiero información."><small>WhatsApp</small><span id="waText">+504 0000-0000</span></a>
+      <a href="#" data-wa data-msg="Hola Kuvo, quiero información."><small>WhatsApp</small><span id="waText">+504 9772-5316</span></a>
       <div><small>Ubicación</small><span>Honduras · toda Latinoamérica</span></div>
       <div><small>Horario</small><span>Lun–Sáb · respondemos en minutos</span></div>
     </div>
@@ -900,7 +899,7 @@ h2.sp.in .w>span{transform:none}
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script>
 /* ───── config ───── */
-const WA_NUMBER = "50400000000"; // ← reemplazar por el número real (código de país + número, sin + ni espacios)
+const WA_NUMBER = "50497725316"; // WhatsApp de Kuvo: +504 9772-5316
 const waLink = msg => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
 document.querySelectorAll("[data-wa]").forEach(a => { a.href = waLink(a.dataset.msg || "Hola Kuvo"); a.target = "_blank"; a.rel = "noopener"; });
 
@@ -1234,7 +1233,7 @@ $$(".rv").forEach(el => io.observe(el));
 const cio = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return; cio.unobserve(e.target); const el = e.target, to = +el.dataset.count, suf = el.dataset.suf || "", pre = el.querySelector("small") ? el.querySelector("small").outerHTML : "";
   const t0 = performance.now(), dur = 1400;
-  (function tick(now){ const k = Math.min(1, (now - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - k, 3))); el.innerHTML = pre + v + suf; if (k < 1) requestAnimationFrame(tick); else { el.classList.add("pop"); const rc = el.getBoundingClientRect(); window.FX && FX.burst(rc.left + 30, rc.top + 20, { n: 14, p: 5 }); } })(t0);
+  (function tick(now){ const k = Math.min(1, (now - t0) / dur), v = Math.round(to * (1 - Math.pow(1 - k, 3))); el.innerHTML = pre + v + suf; if (k < 1) requestAnimationFrame(tick); else { el.classList.add("pop"); } })(t0);
 }), { threshold: .5 });
 $$("[data-count]").forEach(el => cio.observe(el));
 
@@ -1270,7 +1269,7 @@ $$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quier
     if (v("fDet")) L.push("Quiero lograr: " + v("fDet"));
     L.push("Tiempo: " + v("fTiempo") + ". Presupuesto: " + v("fPpto") + ".", "¿Me pueden cotizar?");
     const url = waLink(L.join("\n")); $("#fOpen").href = url;
-    wiz.hidden = true; done.hidden = false; window.open(url, "_blank", "noopener"); window.FX && FX.cannon();
+    wiz.hidden = true; done.hidden = false; window.open(url, "_blank", "noopener");
   });
   document.addEventListener("click", e => {
     const a = e.target.closest("[data-wa],[data-plan],[data-form]"); if (!a) return;
@@ -1377,43 +1376,6 @@ const depthFrame = (function depth(){
 })();
 
 
-/* ───── FX: confeti, chispas y ondas ───── */
-const FX = window.FX = (function(){
-  const cv = $("#fx"), c = cv.getContext("2d"); let W = 0, H = 0, P = [], on = false, lastT = 0;
-  const COL = ["#2fb573", "#9ff0c4", "#eef0e9", "#19f5a8", "#9ff0c4", "#ffd86b", "#ff9a8a"];
-  function size(){ const d = Math.min(devicePixelRatio || 1, 1.5); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; c.setTransform(d, 0, 0, d, 0, 0); }
-  size(); window.addEventListener("resize", size);
-  const rnd = (a, b) => a + Math.random() * (b - a);
-  function add(p){ P.push(p); if (!on) { on = true; requestAnimationFrame(loop); } }
-  function burst(x, y, o){ if (reduce) return; o = o || {}; const n = o.n || 24, pw = o.p || 6;
-    for (let i = 0; i < n; i++) { const a = o.cone != null ? o.cone + rnd(-o.spread, o.spread) : rnd(0, 6.2832), sp = pw * rnd(.35, 1.1);
-      add({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - (o.up || 2), g: o.g != null ? o.g : .2, r: rnd(0, 6.28), vr: rnd(-.3, .3), s: o.s || rnd(4, 9), c: COL[(Math.random() * COL.length) | 0], sh: (Math.random() * 4) | 0, life: 1, d: o.d || rnd(.009, .018) }); } }
-  function ring(x, y){ if (reduce) return; add({ ring: true, x, y, rad: 4, life: 1, d: .045 }); }
-  function spark(x, y){ add({ x, y, vx: rnd(-.6, .6), vy: rnd(-.5, .8), g: .03, r: rnd(0, 6), vr: rnd(-.1, .1), s: rnd(3, 6.5), c: Math.random() < .7 ? "#9ff0c4" : "#eef0e9", sh: 2, life: 1, d: .035 }); }
-  function cannon(){ if (reduce) return;
-    burst(0, H, { n: 70, p: 18, cone: -1.05, spread: .45, up: 4, g: .32, d: .006 }); burst(W, H, { n: 70, p: 18, cone: -2.09, spread: .45, up: 4, g: .32, d: .006 });
-    setTimeout(() => { for (let i = 0; i < 70; i++) add({ x: rnd(0, W), y: rnd(-60, -10), vx: rnd(-1, 1), vy: rnd(1.5, 4), g: .06, r: rnd(0, 6), vr: rnd(-.2, .2), s: rnd(5, 10), c: COL[(Math.random() * COL.length) | 0], sh: (Math.random() * 4) | 0, life: 1, d: .004 }); }, 250);
-    setTimeout(() => burst(W / 2, H * .55, { n: 50, p: 12, up: 3, d: .008 }), 450); }
-  function star(x, y, r){ c.beginPath(); for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4, rr = i % 2 ? r * .35 : r; c.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } c.closePath(); c.fill(); }
-  function loop(now){
-    c.clearRect(0, 0, W, H);
-    for (let i = P.length - 1; i >= 0; i--) { const p = P[i]; p.life -= p.d;
-      if (p.life <= 0 || p.y > H + 40) { P.splice(i, 1); continue; }
-      if (p.ring) { p.rad += 3.2; c.globalAlpha = p.life * .7; c.strokeStyle = "#9ff0c4"; c.lineWidth = 2; c.beginPath(); c.arc(p.x, p.y, p.rad, 0, 6.2832); c.stroke(); continue; }
-      p.vx *= .985; p.vy += p.g; p.x += p.vx; p.y += p.vy; p.r += p.vr; c.globalAlpha = Math.min(1, p.life * 2.2); c.fillStyle = p.c;
-      if (p.sh === 2) { star(p.x, p.y, p.s); continue; }
-      c.save(); c.translate(p.x, p.y); c.rotate(p.r);
-      if (p.sh === 0) c.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); else if (p.sh === 1) { c.beginPath(); c.arc(0, 0, p.s / 3, 0, 6.2832); c.fill(); } else c.fillRect(-p.s * .7, -1, p.s * 1.4, 2.4);
-      c.restore(); }
-    c.globalAlpha = 1; if (P.length) requestAnimationFrame(loop); else on = false;
-  }
-  /* estela de chispas del mouse */
-  if (!isTouch && !reduce) { let lt = 0; window.addEventListener("pointermove", e => { const n = performance.now(); if (n - lt < 38) return; lt = n; spark(e.clientX + rnd(-4, 4), e.clientY + rnd(-4, 4)); }, { passive: true }); }
-  /* clics: onda + chispas */
-  document.addEventListener("pointerdown", e => { if (e.target.closest("input,textarea,select,#fm .fp")) return; ring(e.clientX, e.clientY); const big = e.target.closest(".btn,[data-form],[data-wa],[data-plan],.scard,.plan,.faq summary,.wa-float,.pc"); burst(e.clientX, e.clientY, big ? { n: 20, p: 6.5 } : { n: 6, p: 3, s: 4 }); });
-  return { burst, ring, cannon, spark };
-})();
-
 /* ───── palabra que cambia en el título ───── */
 (function rotWord(){
   const rot = $("#rot"), ws = $$("#rot b"); let i = 0;
@@ -1422,11 +1384,6 @@ const FX = window.FX = (function(){
   function next(){ const prev = ws[i]; prev.classList.remove("on"); prev.classList.add("off"); i = (i + 1) % ws.length; const cur = ws[i]; cur.classList.remove("off"); fit(); setTimeout(() => cur.classList.add("on"), 60); setTimeout(() => prev.classList.remove("off"), 800); }
   const start = () => { fit(); if (!reduce) setInterval(next, 2700); };
   const obs = new MutationObserver(() => { if (document.body.classList.contains("ready")) { obs.disconnect(); setTimeout(start, 2600); } }); obs.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-})();
-
-/* ───── celebración de bienvenida ───── */
-(function welcome(){
-  const obs = new MutationObserver(() => { if (document.body.classList.contains("ready")) { obs.disconnect(); setTimeout(() => { const r = $(".hmark").getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 44, p: 9 }); FX.ring(r.left + r.width / 2, r.top + r.height / 2); }, 1100); } }); obs.observe(document.body, { attributes: true, attributeFilter: ["class"] });
 })();
 
 /* ───── títulos que entran palabra por palabra ───── */
@@ -1439,16 +1396,14 @@ const FX = window.FX = (function(){
 
 /* ───── tarjetas con luz que sigue al mouse + formulario con chispas ───── */
 $$(".plan,.pc,.scard").forEach(el => el.addEventListener("pointermove", e => { const r = el.getBoundingClientRect(); el.style.setProperty("--mx", (e.clientX - r.left) + "px"); el.style.setProperty("--my", (e.clientY - r.top) + "px"); }, { passive: true }));
-$("#fNeeds").addEventListener("change", e => { if (e.target.checked) { const r = e.target.nextElementSibling.getBoundingClientRect(); FX.burst(r.left + r.width / 2, r.top + r.height / 2, { n: 12, p: 4 }); } });
 
 /* ───── letreros motivadores + progreso con hitos ───── */
 const fxFrame = (function marquee(){
-  const A = $("#hrowA"), B = $("#hrowB"), head = $("#phead"), toast = $("#toast"); A.innerHTML += A.innerHTML + A.innerHTML; B.innerHTML += B.innerHTML + B.innerHTML;
-  const MS = [[.25, "✨ ¡Buen ritmo! Sigue explorando"], [.5, "🚀 ¡Ya vas a la mitad! Lo mejor viene ahora"], [.75, "💚 ¡Casi llegas! Tu proyecto te espera"], [.985, "🎉 ¡Llegaste! ¿Empezamos tu proyecto?"]], seen = new Set(); let hideT = 0, lastY = scrollY, vel = 0;
+  const A = $("#hrowA"), B = $("#hrowB"), head = $("#phead"); A.innerHTML += A.innerHTML + A.innerHTML; B.innerHTML += B.innerHTML + B.innerHTML;
+  let lastY = scrollY, vel = 0;
   return function(now){
     const max = Math.max(1, document.documentElement.scrollHeight - innerHeight), p = clamp(scrollY / max, 0, 1);
     head.style.transform = `translateX(${(p * (innerWidth - 10)).toFixed(1)}px)`; head.style.opacity = p > .002 ? 1 : 0;
-    for (const [at, msg] of MS) if (p >= at && !seen.has(at) && document.body.classList.contains("ready")) { seen.add(at); toast.textContent = msg; toast.classList.add("on"); clearTimeout(hideT); hideT = setTimeout(() => toast.classList.remove("on"), 3200); if (at > .9) FX.cannon(); else FX.burst(innerWidth / 2, innerHeight - 60, { n: 26, p: 8, cone: -1.57, spread: .8, up: 3 }); }
     vel += (clamp(scrollY - lastY, -60, 60) - vel) * .1; lastY = scrollY;
     const r = A.parentElement.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
     const w3 = A.scrollWidth / 3, off = (scrollY * .45 + now * .03) % w3, sk = (-vel * .12).toFixed(2);
