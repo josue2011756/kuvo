@@ -45,6 +45,7 @@ em.it{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:
 .btn.lg{padding:22px 36px;font-size:17px}
 .arrow{width:16px;height:16px;transition:transform .5s var(--ease)}.btn:hover .arrow{transform:translate(3px,-3px)}
 
+#bgc{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 /* loader */
 #loader{position:fixed;inset:0;z-index:1000;background:var(--bg);transition:opacity 1s var(--ease)}
 #loader.out{opacity:0}#loader.done{display:none}
@@ -104,13 +105,40 @@ body.ready .up.d1{transition-delay:.3s}body.ready .up.d2{transition-delay:.45s}b
 .rv{opacity:0;transform:translateY(34px);transition:opacity 1s var(--out),transform 1s var(--out)}
 .rv.in{opacity:1;transform:none}
 
+
+/* ───────── SISTEMA SOLAR ───────── */
+.sys{position:relative;padding:130px 0;overflow:hidden;border-top:1px solid var(--line)}
+.sys-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.orb{position:relative;width:100%;max-width:620px;aspect-ratio:1;margin:0 auto}
+.orb .rg{position:absolute;left:50%;top:50%;border-radius:50%;border:1px dashed rgba(159,240,196,.2);transform:translate(-50%,-50%)}
+.orb .rg.r1{width:40%;height:40%}.orb .rg.r2{width:68%;height:68%;border-style:solid;border-color:rgba(159,240,196,.1)}.orb .rg.r3{width:94%;height:94%}
+.orb .halo{position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(47,181,115,.22),transparent 62%);filter:blur(18px);animation:halo 5s ease-in-out infinite alternate}
+@keyframes halo{to{transform:scale(1.12);opacity:.7}}
+.core{position:absolute;left:50%;top:50%;width:20%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--acc);background:radial-gradient(circle,rgba(47,181,115,.35),rgba(7,11,9,.9) 70%);display:grid;place-items:center;box-shadow:0 0 60px rgba(47,181,115,.5),inset 0 0 30px rgba(47,181,115,.3)}
+.core svg{width:46%;height:46%}
+.core::after{content:"";position:absolute;inset:-14%;border-radius:50%;border:1px solid rgba(159,240,196,.3);animation:ping 3s ease-out infinite}
+@keyframes ping{from{transform:scale(.8);opacity:1}to{transform:scale(1.5);opacity:0}}
+.oc{position:absolute;left:50%;top:50%;padding:8px 14px;border-radius:999px;border:1px solid var(--line-2);background:rgba(10,17,14,.88);font-family:var(--mono);font-style:italic;font-size:12.5px;letter-spacing:.02em;white-space:nowrap;cursor:default;transition:opacity .4s,border-color .4s,box-shadow .4s,color .4s;will-change:transform}
+.oc::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc);margin-right:8px;vertical-align:middle}
+.orb.hl .oc{opacity:.22}.orb.hl .oc.on{opacity:1;border-color:var(--acc-2);color:#fff;box-shadow:0 0 26px rgba(47,181,115,.5)}
+.sys-cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.scard{padding:22px;border:1px solid var(--line);border-radius:22px;background:rgba(12,20,16,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:border-color .4s,transform .5s var(--out),box-shadow .4s}
+.scard.on,.scard:hover{border-color:rgba(159,240,196,.55);transform:translateY(-4px);box-shadow:0 20px 50px -24px rgba(47,181,115,.6)}
+.scard .ci{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.scard .ci i{width:34px;height:34px;border-radius:10px;background:rgba(47,181,115,.16);border:1px solid rgba(159,240,196,.25);display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-size:13px;color:var(--acc-2)}
+.scard h3{font-size:19px;letter-spacing:-.02em;line-height:1.1}
+.scard p{font-size:14px;color:var(--fg-2);line-height:1.45;margin-bottom:14px}
+.scard .tg{display:flex;flex-wrap:wrap;gap:6px}
+.scard .tg span{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:4px 9px;border-radius:999px;border:1px solid var(--line-2);color:var(--fg-2)}
+@media(max-width:900px){.sys{padding:90px 0}.sys-grid{grid-template-columns:1fr;gap:40px}.oc{font-size:11px;padding:6px 10px}.oc::before{margin-right:6px}.sys-cards{grid-template-columns:1fr}}
+
 /* ───────── HERO ───────── */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden}
 .blob{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;will-change:transform}
 .blob.a{width:640px;height:640px;left:-200px;top:-180px;background:var(--acc-d);opacity:.5;animation:fl 16s ease-in-out infinite alternate}
 .blob.b{width:560px;height:560px;right:-160px;bottom:-220px;background:#0d4d33;opacity:.6;animation:fl 20s ease-in-out infinite alternate-reverse}
 @keyframes fl{to{transform:translate(70px,50px) scale(1.12)}}
-.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:88px 88px;opacity:.35;mask-image:radial-gradient(70% 70% at 50% 50%,#000 10%,transparent 100%);-webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000 10%,transparent 100%);pointer-events:none}
+.hero::before{content:"";position:absolute;left:0;right:0;bottom:0;height:55%;background:radial-gradient(60% 90% at 50% 100%,rgba(47,181,115,.16),transparent 70%);pointer-events:none}
 #hc{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 .hero-vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(46% 40% at 50% 48%,rgba(7,11,9,.78),transparent 100%)}
 .hero-c{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:92px 0 18px}
@@ -227,7 +255,7 @@ h2{font-size:clamp(38px,4.8vw,70px);line-height:.98;letter-spacing:-.035em;font-
 
 /* ───────── BENTO ───────── */
 .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-.tile{position:relative;grid-column:span 4;border:1px solid var(--line);border-radius:24px;background:var(--bg-2);padding:28px;min-height:300px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .6s var(--out),border-color .4s}
+.tile{position:relative;grid-column:span 4;border:1px solid var(--line);border-radius:24px;background:rgba(12,20,16,.68);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:28px;min-height:300px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .6s var(--out),border-color .4s}
 .tile::before{content:"";position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(47,181,115,.16),transparent 60%);opacity:0;transition:opacity .4s}
 .tile:hover::before{opacity:1}.tile:hover{border-color:rgba(47,181,115,.45);transform:translateY(-4px)}
 .tile>*{position:relative}
@@ -276,7 +304,7 @@ h2{font-size:clamp(38px,4.8vw,70px);line-height:.98;letter-spacing:-.035em;font-
 .drag{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 0 30px;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch;margin-right:calc(-1 * (100vw - min(1280px,100vw - 48px)) / 2);padding-right:40px}
 .drag::-webkit-scrollbar{display:none}
 .drag.grabbing{cursor:grabbing;scroll-snap-type:none}
-.pc{flex:0 0 min(460px,82vw);scroll-snap-align:start;border-radius:26px;border:1px solid var(--line);background:var(--bg-2);overflow:hidden;min-height:500px;display:flex;flex-direction:column;position:relative;user-select:none}
+.pc{flex:0 0 min(460px,82vw);scroll-snap-align:start;border-radius:26px;border:1px solid var(--line);background:rgba(12,20,16,.68);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow:hidden;min-height:500px;display:flex;flex-direction:column;position:relative;user-select:none}
 .pc .art2{height:290px;position:relative;overflow:hidden;background:radial-gradient(70% 70% at 70% 20%,rgba(47,181,115,.6),transparent 70%),var(--bg-3)}
 .pc .mock{position:absolute;left:12%;right:12%;top:18%;bottom:0;border-radius:14px 14px 0 0;background:var(--bg-2);border:1px solid var(--line-2);border-bottom:0;transform:translateY(14px);transition:transform .8s var(--ease);overflow:hidden}
 .pc:hover .mock{transform:translateY(0)}
@@ -324,7 +352,7 @@ h2{font-size:clamp(38px,4.8vw,70px);line-height:.98;letter-spacing:-.035em;font-
 
 /* ───────── PLANES ───────── */
 .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.plan{position:relative;border:1px solid var(--line);border-radius:26px;padding:36px 30px;background:var(--bg-2);display:flex;flex-direction:column;gap:18px;transition:transform .6s var(--out),border-color .4s}
+.plan{position:relative;border:1px solid var(--line);border-radius:26px;padding:36px 30px;background:rgba(12,20,16,.68);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;flex-direction:column;gap:18px;transition:transform .6s var(--out),border-color .4s}
 .plan:hover{transform:translateY(-8px);border-color:var(--line-2)}
 .plan.hi{background:linear-gradient(160deg,#10281c,var(--bg-2) 60%);border-color:rgba(47,181,115,.5);box-shadow:0 40px 100px -40px rgba(47,181,115,.35)}
 .plan .mono{color:var(--mute)}.plan.hi .mono{color:var(--acc-2)}
@@ -393,6 +421,7 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
   </div>
 </div>
 <canvas id="lc"></canvas>
+<canvas id="bgc"></canvas>
 <div class="grain"></div>
 <div class="cur cur-wrap" id="curWrap"><div id="cur"></div></div>
 <div class="cur cur-wrap" id="curWrap2"><div id="curRing"></div></div>
@@ -424,7 +453,6 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
 
 <!-- ═══════ HERO ═══════ -->
 <section class="hero" id="hero">
-  <div class="blob a"></div><div class="blob b"></div>
   <canvas id="hc"></canvas>
   <div class="hero-vig"></div>
   <div class="fchip c1"><i>✓</i><div>Pedido nuevo<small>L 850 · pagado</small></div></div>
@@ -496,6 +524,28 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
       </div>
       <div></div>
       <div class="mdots" id="mdots"><i class="on"></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SISTEMA SOLAR ═══════ -->
+<section class="sys" id="sistema">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="mono">Todo el sistema</div><h2>Lo que podemos hacer, <em class="it">en órbita</em>.</h2></div>
+      <p>Cada servicio gira alrededor de tu negocio. Pasa el mouse por una tarjeta y mira dónde vive dentro del sistema.</p>
+    </div>
+    <div class="sys-grid">
+      <div class="orb rv" id="orb">
+        <div class="halo"></div><div class="rg r3"></div><div class="rg r2"></div><div class="rg r1"></div>
+        <div class="core"><svg viewBox="0 0 64 64" fill="none"><rect x="14" y="12" width="9" height="40" fill="#9ff0c4"/><path d="M29 12L48 32L29 52" stroke="#9ff0c4" stroke-width="9" stroke-linejoin="miter"/></svg></div>
+      </div>
+      <div class="sys-cards rv" id="scards">
+        <div class="scard" data-g="web"><div class="ci"><i>&lt;/&gt;</i><h3>Webs y tiendas</h3></div><p>Páginas que cargan rápido, se ven premium y venden.</p><div class="tg"><span>Sitios web</span><span>Landing</span><span>Tiendas</span><span>SEO</span></div></div>
+        <div class="scard" data-g="bot"><div class="ci"><i>AI</i><h3>WhatsApp e IA</h3></div><p>Bots que atienden, cobran y agendan las 24 horas.</p><div class="tg"><span>WhatsApp</span><span>IA</span><span>Pagos</span><span>Automatización</span></div></div>
+        <div class="scard" data-g="sis"><div class="ci"><i>#</i><h3>Sistemas a medida</h3></div><p>El software que tu negocio necesita, hecho para ti.</p><div class="tg"><span>Inventario</span><span>Facturación</span><span>Reservas</span><span>CRM</span></div></div>
+        <div class="scard" data-g="prod"><div class="ci"><i>✦</i><h3>Producto y marca</h3></div><p>Apps, paneles e identidad para que te recuerden.</p><div class="tg"><span>Dashboards</span><span>Apps móviles</span><span>Branding</span><span>UI/UX</span></div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -806,6 +856,47 @@ const heroFrame = (function heroSwarm(){
   };
 })();
 
+
+/* ───── FONDO: red de nodos que sigue al mouse ───── */
+const bgFrame = (function bgNet(){
+  const cv = $("#bgc"), c = cv.getContext("2d"); let W = 0, H = 0, N = [];
+  function size(){ const d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; c.setTransform(d, 0, 0, d, 0, 0); const n = W < 700 ? 38 : 90; N = []; for (let i = 0; i < n; i++) N.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22, r: .8 + Math.random() * 1.4, g: Math.random() < .25 }); }
+  size(); window.addEventListener("resize", size);
+  const L = W < 700 ? 110 : 150;
+  return function(now){
+    c.clearRect(0, 0, W, H); const maxD = W < 700 ? 110 : 150, m2 = maxD * maxD;
+    if (mouseIn && !isTouch) { const g = c.createRadialGradient(mx, my, 0, mx, my, 260); g.addColorStop(0, "rgba(47,181,115,.12)"); g.addColorStop(1, "rgba(47,181,115,0)"); c.fillStyle = g; c.fillRect(mx - 260, my - 260, 520, 520); }
+    c.lineWidth = 1;
+    for (let i = 0; i < N.length; i++) {
+      const a = N[i]; a.x += a.vx; a.y += a.vy; if (a.x < -20) a.x = W + 20; else if (a.x > W + 20) a.x = -20; if (a.y < -20) a.y = H + 20; else if (a.y > H + 20) a.y = -20;
+      for (let j = i + 1; j < N.length; j++) { const b = N[j], dx = a.x - b.x, dy = a.y - b.y, d = dx * dx + dy * dy; if (d < m2) { c.strokeStyle = `rgba(159,240,196,${(1 - d / m2) * .2})`; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); } }
+      if (mouseIn && !isTouch) { const dx = a.x - mx, dy = a.y - my, d = dx * dx + dy * dy; if (d < 40000) { c.strokeStyle = `rgba(47,181,115,${(1 - d / 40000) * .55})`; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(mx, my); c.stroke(); } }
+      c.fillStyle = a.g ? "rgba(47,181,115,.9)" : "rgba(238,240,233,.45)"; c.beginPath(); c.arc(a.x, a.y, a.g ? a.r + .6 : a.r, 0, 6.2832); c.fill();
+    }
+  };
+})();
+
+/* ───── SISTEMA SOLAR de servicios ───── */
+const orbFrame = (function orbit(){
+  const orb = $("#orb"), cards = $$("#scards .scard");
+  const RINGS = [{ r: .2, rm: .2, sp: .22, items: [["WhatsApp", "bot"], ["IA", "bot"], ["Pagos", "bot"]] },
+    { r: .34, rm: .31, sp: -.15, items: [["Sitios web", "web"], ["Landing", "web"], ["Tiendas", "web"], ["SEO", "web"], ["Automatización", "bot"]] },
+    { r: .47, rm: .42, sp: .1, items: [["Inventario", "sis"], ["Dashboards", "prod"], ["Facturación", "sis"], ["Apps móviles", "prod"], ["Reservas", "sis"], ["Branding", "prod"], ["CRM", "sis"], ["UI/UX", "prod"]] }];
+  const chips = [];
+  RINGS.forEach((rg, ri) => rg.items.forEach(([t, g], i) => { const el = document.createElement("span"); el.className = "oc"; el.dataset.g = g; el.textContent = t; orb.appendChild(el); chips.push({ el, ri, a0: i / rg.items.length * 6.2832 + ri }); }));
+  const angles = RINGS.map(() => 0); let last = 0, slow = 1, hov = false, W = 0;
+  function hl(g){ orb.classList.toggle("hl", !!g); chips.forEach(c => c.el.classList.toggle("on", c.el.dataset.g === g)); cards.forEach(k => k.classList.toggle("on", k.dataset.g === g)); hov = !!g; }
+  cards.forEach(k => { k.addEventListener("mouseenter", () => hl(k.dataset.g)); k.addEventListener("mouseleave", () => hl(null)); });
+  chips.forEach(c => { c.el.addEventListener("mouseenter", () => hl(c.el.dataset.g)); c.el.addEventListener("mouseleave", () => hl(null)); });
+  return function(now){
+    const r = orb.getBoundingClientRect(); if (r.bottom < -100 || r.top > innerHeight + 100) { last = 0; return; }
+    const dt = last ? Math.min(.05, (now - last) / 1000) : 0; last = now; W = r.width;
+    slow += ((hov ? .12 : 1) - slow) * .06; const mob = innerWidth < 900;
+    RINGS.forEach((rg, i) => angles[i] += dt * rg.sp * slow);
+    for (const c of chips) { const rg = RINGS[c.ri], a = c.a0 + angles[c.ri], R = (mob ? rg.rm : rg.r) * W; c.el.style.transform = `translate(calc(-50% + ${(Math.cos(a) * R).toFixed(1)}px),calc(-50% + ${(Math.sin(a) * R).toFixed(1)}px))`; }
+  };
+})();
+
 /* ───── MORPH: partículas que cambian de forma al bajar ───── */
 const morph = $("#que"), mstick = morph.querySelector(".stick"), msteps = $$("#msteps .mstep"), mdots = $$("#mdots i");
 const MF = new Field($("#mc")); let mShapes = [], mStage = -1, mVisible = false;
@@ -917,7 +1008,7 @@ function onFrame(now){
   hdr.classList.toggle("hide", y > lastY && y > 200 && !document.body.classList.contains("menu"));
   hdr.classList.toggle("solid", y > 40); lastY = y;
   rx += (mx - rx) * .18; ry += (my - ry) * .18; curW2.style.transform = `translate(${rx}px,${ry}px)`;
-  heroFrame(now); if (document.body.classList.contains("ready")) morphFrame(now);
+  bgFrame(now); heroFrame(now); orbFrame(now); if (document.body.classList.contains("ready")) morphFrame(now);
 }
 
 /* ───── reloj Honduras ───── */
