@@ -118,42 +118,95 @@ body.ready .up.d1{transition-delay:.3s}body.ready .up.d2{transition-delay:.45s}b
 
 
 /* ───────── FORMULARIO ───────── */
-.fm{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:18px;background:rgba(4,8,6,.74);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.fm{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:18px;background:rgba(3,7,5,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
 .fm.open{opacity:1;visibility:visible}
-.fp{position:relative;width:min(580px,100%);max-height:94svh;overflow-y:auto;border:1px solid var(--line-2);border-radius:28px;background:linear-gradient(180deg,#0e1813,#09100c);padding:34px 32px 28px;transform:translateY(26px) scale(.98);transition:transform .6s var(--out);box-shadow:0 40px 120px -30px rgba(0,0,0,.9),0 0 80px -30px rgba(47,181,115,.4);scrollbar-width:none}
+.fp{position:relative;width:min(700px,100%);max-height:94svh;overflow-y:auto;border:1px solid var(--line-2);border-radius:30px;background:radial-gradient(90% 40% at 50% 0,rgba(47,181,115,.16),transparent 70%),linear-gradient(180deg,#0e1813,#080e0b);padding:0;transform:translateY(26px) scale(.98);transition:transform .6s var(--out);box-shadow:0 50px 140px -30px rgba(0,0,0,.95),0 0 90px -30px rgba(47,181,115,.45);scrollbar-width:none}
 .fp::-webkit-scrollbar{display:none}
 .fm.open .fp{transform:none}
-.fx{position:absolute;right:16px;top:16px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:var(--fg);cursor:pointer;font-size:18px;line-height:1}
-.fx:hover{background:var(--fg);color:var(--ink)}
-.fk{color:var(--acc-2);display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.fk::before{content:"";width:24px;height:1px;background:currentColor}
-.fp h3{font-size:clamp(26px,4vw,34px);letter-spacing:-.03em;line-height:1.05;margin-bottom:6px;padding-right:44px}
-.fp .fs{color:var(--fg-2);font-size:15px;margin-bottom:20px}
-.fbar{display:flex;gap:6px;margin-bottom:22px}.fbar i{flex:1;height:3px;border-radius:3px;background:var(--line-2);transition:background .4s}.fbar i.on{background:var(--acc)}
-.fstep{display:none;gap:16px;flex-direction:column}.fstep.on{display:flex;animation:pop .45s var(--out)}
-.fld{display:flex;flex-direction:column;gap:7px}
-.fld>label,.fld>.lb{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-.fld input[type=text],.fld select,.fld textarea{width:100%;background:rgba(238,240,233,.05);border:1px solid var(--line-2);border-radius:14px;padding:14px 16px;color:var(--fg);font:inherit;font-size:16px;outline:0;transition:border-color .3s,background .3s}
-.fld select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%239ff0c4' stroke-width='2'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
-.fld select option{background:#0e1813;color:var(--fg)}
-.fld textarea{min-height:96px;resize:vertical}
-.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--acc);background:rgba(47,181,115,.07)}
+.fx{position:absolute;right:18px;top:18px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line-2);background:rgba(238,240,233,.04);color:var(--fg);cursor:pointer;font-size:17px;line-height:1;z-index:3;transition:background .3s,color .3s,transform .4s var(--out)}
+.fx:hover{background:var(--fg);color:var(--ink);transform:rotate(90deg)}
+.fhead{padding:34px 40px 8px}
+.fbrand{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.fbrand svg{width:34px;height:34px;filter:drop-shadow(0 0 8px rgba(25,245,168,.8))}
+.fbrand .mono{color:var(--acc-2);font-size:11.5px}
+.fp h3{font-size:clamp(28px,4.2vw,40px);letter-spacing:-.035em;line-height:1.04;margin-bottom:8px;padding-right:50px}
+.fp .fs{color:var(--fg-2);font-size:16px;line-height:1.5}
+.fplan{display:inline-block;margin-top:12px;padding:6px 12px;border-radius:999px;background:rgba(47,181,115,.16);border:1px solid rgba(159,240,196,.3);color:var(--acc-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.fsteps{list-style:none;display:flex;align-items:center;gap:0;padding:22px 40px 6px;counter-reset:s}
+.fsteps li{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);flex:none}
+.fsteps li i{width:30px;height:30px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-style:normal;font-size:12px;transition:background .4s,border-color .4s,color .4s,box-shadow .4s}
+.fsteps li::after{content:"";width:clamp(16px,5vw,46px);height:1px;background:var(--line-2);margin:0 10px;transition:background .4s}
+.fsteps li:last-child::after{display:none}
+.fsteps li.on{color:var(--fg)}.fsteps li.on i{background:var(--acc);border-color:var(--acc);color:var(--acc-fg);box-shadow:0 0 0 5px rgba(47,181,115,.18)}
+.fsteps li.done{color:var(--acc-2)}.fsteps li.done i{background:rgba(47,181,115,.2);border-color:var(--acc);color:var(--acc-2)}.fsteps li.done::after{background:var(--acc)}
+.fsteps li:not(.on) span{display:none}
+.fbody{padding:14px 40px 4px}
+.fstep{display:none;flex-direction:column;gap:20px}
+.fstep.on{display:flex;animation:fin .5s var(--out)}
+.fstep.rev.on{animation-name:finb}
+@keyframes fin{from{opacity:0;transform:translateX(26px)}}
+@keyframes finb{from{opacity:0;transform:translateX(-26px)}}
+.flb{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-bottom:9px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fld input[type=text],.fld textarea{width:100%;background:rgba(238,240,233,.045);border:1px solid var(--line-2);border-radius:16px;padding:16px 18px;color:var(--fg);font:inherit;font-size:16.5px;outline:0;transition:border-color .3s,background .3s,box-shadow .3s}
+.fld textarea{min-height:104px;resize:vertical}
+.fld input:focus,.fld textarea:focus{border-color:var(--acc);background:rgba(47,181,115,.07);box-shadow:0 0 0 4px rgba(47,181,115,.16)}
 .fld input::placeholder,.fld textarea::placeholder{color:var(--mute)}
-.fch{display:flex;flex-wrap:wrap;gap:8px}
-.fch label{cursor:pointer}.fch input{position:absolute;opacity:0;pointer-events:none}
-.fch span{display:inline-block;padding:10px 15px;border-radius:999px;border:1px solid var(--line-2);font-size:14px;font-weight:500;transition:background .3s,color .3s,border-color .3s}
-.fch input:checked+span{background:var(--acc);border-color:var(--acc);color:var(--acc-fg)}
-.fch input:focus-visible+span{outline:2px solid var(--acc-2);outline-offset:2px}
-.fnav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:24px}
-.fnav .btn{padding:15px 24px}
-.fnav .back{border:0;background:none;color:var(--mute);font-size:14px;cursor:pointer;padding:12px 6px}
+.fgrp,.fld input,.fld textarea{transition:border-color .3s,box-shadow .3s}
+.bad,.fld input.bad{border-color:#ef6a5e!important;box-shadow:0 0 0 4px rgba(239,106,94,.14)!important}
+.fgrp.bad{border:1px solid #ef6a5e;border-radius:18px;padding:8px;margin:-8px}
+.fgrp label{cursor:pointer;position:relative}
+.fgrp input{position:absolute;opacity:0;pointer-events:none}
+.rcg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.rc span{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:88px;padding:12px 8px;border:1px solid var(--line-2);border-radius:18px;background:rgba(238,240,233,.03);font-size:13.5px;font-weight:500;line-height:1.2;text-align:center;transition:transform .35s var(--out),border-color .3s,background .3s,box-shadow .3s}
+.rc span b{font-size:26px;font-weight:400;line-height:1}
+.rc:hover span{transform:translateY(-3px);border-color:rgba(159,240,196,.4)}
+.rc input:checked+span{border-color:var(--acc);background:rgba(47,181,115,.17);box-shadow:0 12px 30px -14px rgba(47,181,115,.8),inset 0 0 0 1px var(--acc)}
+.ntg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nt span{display:flex;align-items:center;gap:13px;padding:14px 16px;border:1px solid var(--line-2);border-radius:18px;background:rgba(238,240,233,.03);font-size:15px;font-weight:500;transition:transform .35s var(--out),border-color .3s,background .3s,box-shadow .3s}
+.nt span b{font-size:23px;font-weight:400;line-height:1;flex:none}
+.nt span::after{content:"";margin-left:auto;flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line-2);transition:background .3s,border-color .3s}
+.nt:hover span{transform:translateY(-2px);border-color:rgba(159,240,196,.4)}
+.nt input:checked+span{border-color:var(--acc);background:rgba(47,181,115,.15)}
+.nt input:checked+span::after{background:var(--acc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2307140d' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7'/%3E%3C/svg%3E") center/13px no-repeat;border-color:var(--acc)}
+.plg{display:flex;flex-wrap:wrap;gap:9px}
+.pl span{display:inline-block;padding:13px 19px;border:1px solid var(--line-2);border-radius:999px;background:rgba(238,240,233,.03);font-size:15px;font-weight:500;transition:transform .35s var(--out),border-color .3s,background .3s,color .3s}
+.pl:hover span{transform:translateY(-2px);border-color:rgba(159,240,196,.4)}
+.pl input:checked+span{background:var(--acc);border-color:var(--acc);color:var(--acc-fg);font-weight:600}
+.fgrp input:focus-visible+span{outline:2px solid var(--acc-2);outline-offset:3px}
+.wapv{border-radius:20px;padding:18px 16px 14px;background:#0b141a;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:18px 18px;border:1px solid var(--line)}
+.wapv .wah{display:flex;align-items:center;gap:10px;margin:-4px 0 14px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px}
+.wapv .wah i{width:34px;height:34px;border-radius:50%;background:var(--acc);display:grid;place-items:center;font-style:normal;font-weight:800;color:var(--acc-fg);font-size:14px}
+.wapv .wah small{display:block;color:#8fa39b;font-size:11.5px;line-height:1.2}
+.wab{max-width:94%;margin-left:auto;padding:9px 12px 6px;border-radius:14px 14px 4px 14px;background:#005c4b;color:#e9edef;font-size:14px;line-height:1.5;max-height:250px;overflow-y:auto;scrollbar-width:thin;word-wrap:break-word}
+.wab b{font-weight:700;color:#fff}
+.wam{display:block;text-align:right;font-size:11px;color:rgba(233,237,239,.6);margin-top:3px}
+.wam em{font-style:normal;color:#53bdeb;letter-spacing:-2px;margin-left:4px}
+.fnote{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:16px;border:1px solid rgba(159,240,196,.28);background:rgba(47,181,115,.09);font-size:14.5px;line-height:1.5;color:var(--fg-2)}
+.fnote i{font-style:normal;font-size:20px;line-height:1.1}
+.fnote b{color:var(--fg)}
+.ferr{min-height:20px;margin:10px 0 0;padding:0 40px;color:#ff8f84;font-size:14px;font-weight:500}
+.fnav{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:12px 40px 32px}
+.fnav .btn{padding:17px 28px}
+.fnav .btn svg.wi{width:18px;height:18px}
+.fnav .back{border:0;background:none;color:var(--mute);font-size:15px;cursor:pointer;padding:12px 6px}
 .fnav .back:hover{color:var(--fg)}
-.fdone{text-align:center;padding:20px 0 6px}
-.fdone .ok{width:64px;height:64px;border-radius:50%;margin:0 auto 18px;background:rgba(47,181,115,.18);border:1px solid var(--acc);display:grid;place-items:center}
-.fdone .ok svg{width:28px;height:28px}
-.fdone p{color:var(--fg-2);margin:10px auto 22px;max-width:380px}
-.fplan{display:inline-block;margin-bottom:14px;padding:5px 11px;border-radius:999px;background:rgba(47,181,115,.16);border:1px solid rgba(159,240,196,.3);color:var(--acc-2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
-@media(max-width:560px){.fp{padding:28px 20px 22px;border-radius:24px}.fm{align-items:end;padding:10px}}
+.fdone{text-align:center;padding:56px 40px 44px}
+.fdone .ok{width:78px;height:78px;border-radius:50%;margin:0 auto 22px;background:rgba(47,181,115,.18);border:1.5px solid var(--acc);display:grid;place-items:center;box-shadow:0 0 50px -8px rgba(47,181,115,.7)}
+.fdone .ok svg{width:36px;height:36px}
+.fdone .ok path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .7s .2s var(--out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.fdone h3{padding:0;margin-bottom:10px}
+.fdone p{color:var(--fg-2);margin:0 auto 14px;max-width:420px}
+.fdone .folio{display:inline-block;margin:6px 0 24px;padding:8px 16px;border-radius:999px;border:1px dashed rgba(159,240,196,.4);color:var(--acc-2);font-family:var(--mono);font-size:12.5px;letter-spacing:.14em}
+@media(max-width:620px){
+  .fm{align-items:end;padding:8px}
+  .fp{border-radius:26px}
+  .fhead{padding:28px 22px 6px}.fsteps{padding:18px 22px 4px}.fbody{padding:12px 22px 2px}.ferr{padding:0 22px}.fnav{padding:10px 22px 24px}.fdone{padding:44px 22px 36px}
+  .frow{grid-template-columns:1fr}.rcg{grid-template-columns:repeat(2,1fr)}.ntg{grid-template-columns:1fr}
+  .fsteps li::after{margin:0 7px;width:14px}
+  .fnav .btn{padding:16px 22px}
+}
 
 /* ───────── SISTEMA SOLAR ───────── */
 .sys{position:relative;padding:130px 0;overflow:hidden;border-top:1px solid var(--line)}
@@ -589,43 +642,47 @@ h2.sp.in .w>span{transform:none}
     <button class="fx" id="fClose" type="button" aria-label="Cerrar">✕</button>
     <form id="fForm" novalidate>
       <div id="fWiz">
-        <div class="mono fk">Cuéntanos de tu negocio</div>
-        <h3 id="fTitle">Antes de hablar, conozcamos tu negocio.</h3>
-        <p class="fs">Responde 3 preguntas rápidas y te escribimos por WhatsApp con todo listo. Tarda menos de un minuto.</p>
-        <span class="fplan" id="fPlan" hidden></span>
-        <div class="fbar" id="fBar"><i class="on"></i><i></i><i></i></div>
-
-        <div class="fstep on" data-s="0">
-          <div class="fld"><label for="fNombre">Tu nombre</label><input id="fNombre" type="text" placeholder="Ej: María López" autocomplete="name" required></div>
-          <div class="fld"><label for="fNegocio">Nombre de tu negocio</label><input id="fNegocio" type="text" placeholder="Ej: Café Amalia" required></div>
-          <div class="fld"><label for="fRubro">¿A qué se dedica?</label>
-            <select id="fRubro" required><option value="">Elige una opción…</option><option>Restaurante o cafetería</option><option>Tienda o comercio</option><option>Salud, belleza o bienestar</option><option>Gimnasio o fitness</option><option>Transporte o logística</option><option>Servicios profesionales</option><option>Educación</option><option>Otro</option></select></div>
+        <div class="fhead">
+          <div class="fbrand"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#kglyph" width="64" height="64"/></svg><span class="mono">Cotización gratis · responde en minutos</span></div>
+          <h3 id="fTitle">Primero, cuéntanos de ti</h3>
+          <p class="fs" id="fSub">Tarda menos de un minuto y la cotización no tiene costo.</p>
+          <span class="fplan" id="fPlan" hidden></span>
         </div>
-
-        <div class="fstep" data-s="1">
-          <div class="fld"><span class="lb">¿Qué necesitas? (puedes elegir varias)</span>
-            <div class="fch" id="fNeeds"><label><input type="checkbox" value="Página web"><span>Página web</span></label><label><input type="checkbox" value="Tienda en línea"><span>Tienda en línea</span></label><label><input type="checkbox" value="Bot de WhatsApp"><span>Bot de WhatsApp</span></label><label><input type="checkbox" value="Sistema a medida"><span>Sistema a medida</span></label><label><input type="checkbox" value="App móvil"><span>App móvil</span></label><label><input type="checkbox" value="Logo e identidad"><span>Logo e identidad</span></label><label><input type="checkbox" value="No sé aún"><span>No sé aún</span></label></div></div>
-          <div class="fld"><label for="fPres">¿Ya tienes página o redes? (opcional)</label><input id="fPres" type="text" placeholder="Link o @usuario, o escribe «ninguna»"></div>
-          <div class="fld"><label for="fDet">Cuéntanos qué quieres lograr (opcional)</label><textarea id="fDet" placeholder="Ej: quiero que mis clientes pidan por WhatsApp sin que yo conteste uno por uno."></textarea></div>
+        <ol class="fsteps" id="fSteps"><li class="on"><i>1</i><span>Tú</span></li><li><i>2</i><span>Proyecto</span></li><li><i>3</i><span>Detalles</span></li><li><i>4</i><span>Enviar</span></li></ol>
+        <div class="fbody">
+          <div class="fstep on" data-s="0">
+            <div class="frow">
+              <div class="fld"><label class="flb" for="fNombre">Tu nombre</label><input id="fNombre" type="text" placeholder="Ej: María López" autocomplete="name"></div>
+              <div class="fld"><label class="flb" for="fNegocio">Tu negocio</label><input id="fNegocio" type="text" placeholder="Ej: Café Amalia"></div>
+            </div>
+            <div><span class="flb">¿A qué se dedica?</span><div class="fgrp rcg" id="fRubro"><label class="rc"><input type="radio" name="rubro" value="Restaurante o cafetería"><span><b>☕</b>Restaurante o café</span></label><label class="rc"><input type="radio" name="rubro" value="Tienda o comercio"><span><b>🛍️</b>Tienda o comercio</span></label><label class="rc"><input type="radio" name="rubro" value="Salud, belleza o bienestar"><span><b>💆</b>Salud y belleza</span></label><label class="rc"><input type="radio" name="rubro" value="Gimnasio o fitness"><span><b>🏋️</b>Gimnasio o fitness</span></label><label class="rc"><input type="radio" name="rubro" value="Transporte"><span><b>🚕</b>Transporte</span></label><label class="rc"><input type="radio" name="rubro" value="Servicios profesionales"><span><b>💼</b>Servicios profesionales</span></label><label class="rc"><input type="radio" name="rubro" value="Educación"><span><b>🎓</b>Educación</span></label><label class="rc"><input type="radio" name="rubro" value="Otro"><span><b>✨</b>Otro</span></label></div></div>
+          </div>
+          <div class="fstep" data-s="1">
+            <div><span class="flb">¿Qué necesitas? Puedes elegir varias</span><div class="fgrp ntg" id="fNeeds"><label class="nt"><input type="checkbox" value="Página web"><span><b>🌐</b>Página web</span></label><label class="nt"><input type="checkbox" value="Tienda en línea"><span><b>🛒</b>Tienda en línea</span></label><label class="nt"><input type="checkbox" value="Bot de WhatsApp"><span><b>💬</b>Bot de WhatsApp</span></label><label class="nt"><input type="checkbox" value="Sistema a medida"><span><b>⚙️</b>Sistema a medida</span></label><label class="nt"><input type="checkbox" value="App móvil"><span><b>📱</b>App móvil</span></label><label class="nt"><input type="checkbox" value="Logo e identidad"><span><b>🎨</b>Logo e identidad</span></label><label class="nt"><input type="checkbox" value="No sé aún"><span><b>🤔</b>No sé aún</span></label></div></div>
+            <div class="fld"><label class="flb" for="fPres">¿Ya tienes página o redes? (opcional)</label><input id="fPres" type="text" placeholder="Link, @usuario o escribe «ninguna»"></div>
+            <div class="fld"><label class="flb" for="fDet">¿Qué quieres lograr? (opcional)</label><textarea id="fDet" placeholder="Ej: quiero que mis clientes pidan por WhatsApp sin que yo conteste uno por uno."></textarea></div>
+          </div>
+          <div class="fstep" data-s="2">
+            <div><span class="flb">¿Para cuándo lo necesitas?</span><div class="fgrp plg" id="fTiempo"><label class="pl"><input type="radio" name="tiempo" value="Lo antes posible"><span>Lo antes posible</span></label><label class="pl"><input type="radio" name="tiempo" value="En 2 semanas"><span>En 2 semanas</span></label><label class="pl"><input type="radio" name="tiempo" value="Este mes"><span>Este mes</span></label><label class="pl"><input type="radio" name="tiempo" value="Sin prisa"><span>Sin prisa</span></label></div></div>
+            <div><span class="flb">Presupuesto aproximado</span><div class="fgrp plg" id="fPpto"><label class="pl"><input type="radio" name="ppto" value="Menos de $300"><span>Menos de $300</span></label><label class="pl"><input type="radio" name="ppto" value="$300 – $800"><span>$300 – $800</span></label><label class="pl"><input type="radio" name="ppto" value="$800 – $2,000"><span>$800 – $2,000</span></label><label class="pl"><input type="radio" name="ppto" value="Más de $2,000"><span>Más de $2,000</span></label><label class="pl"><input type="radio" name="ppto" value="Aún no lo sé"><span>Aún no lo sé</span></label></div></div>
+            <div class="fnote"><i>💡</i><div><b>Así trabajamos:</b> la cotización es gratis. Para iniciar el proyecto se paga un anticipo del <b>50 %</b> y el otro 50 % cuando apruebes el resultado.</div></div>
+          </div>
+          <div class="fstep" data-s="3">
+            <div class="wapv"><div class="wah"><i>K</i><div><b>Kuvo</b><small>WhatsApp · +504 9772-5316</small></div></div><div class="wab"><span id="fPrev"></span><span class="wam" id="fPrevT"></span></div></div>
+            <div class="fnote"><i>✅</i><div>Al enviar se abre <b>WhatsApp con este mensaje ya escrito</b>. Solo toca enviar y te respondemos en minutos.</div></div>
+          </div>
         </div>
-
-        <div class="fstep" data-s="2">
-          <div class="fld"><label for="fTiempo">¿Para cuándo lo necesitas?</label>
-            <select id="fTiempo" required><option value="">Elige una opción…</option><option>Lo antes posible</option><option>En 2 semanas</option><option>Este mes</option><option>Sin prisa, estoy explorando</option></select></div>
-          <div class="fld"><label for="fPpto">Presupuesto aproximado</label>
-            <select id="fPpto" required><option value="">Elige una opción…</option><option>Menos de $300</option><option>$300 – $800</option><option>$800 – $2,000</option><option>Más de $2,000</option><option>Aún no lo sé</option></select></div>
-          <p class="fs" style="margin:2px 0 0;font-size:13.5px">Al enviar se abrirá WhatsApp con tus respuestas ya escritas. Solo tienes que darle enviar.</p>
-        </div>
-
+        <p class="ferr" id="fErr" role="alert"></p>
         <div class="fnav"><button type="button" class="back" id="fBack" hidden>← Atrás</button><span></span>
           <button type="button" class="btn acc" id="fNext"><span>Siguiente</span><svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13L13 3M5 3h8v8"/></svg></button>
-          <button type="submit" class="btn acc" id="fSend" hidden><span>Enviar por WhatsApp</span><svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13L13 3M5 3h8v8"/></svg></button>
+          <button type="submit" class="btn acc" id="fSend" hidden><svg class="wi" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.1 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span>Enviar por WhatsApp</span></button>
         </div>
       </div>
       <div class="fdone" id="fDone" hidden>
         <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="#9ff0c4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
-        <h3 style="padding:0">¡Gracias por contarnos!</h3>
+        <h3>¡Gracias por contarnos!</h3>
         <p>Abrimos WhatsApp con tus respuestas. Si no se abrió, toca el botón de abajo.</p>
+        <div class="folio" id="fFolio"></div><br>
         <a class="btn acc" id="fOpen" href="#" target="_blank" rel="noopener"><span>Abrir WhatsApp</span></a>
       </div>
     </form>
@@ -824,7 +881,7 @@ h2.sp.in .w>span{transform:none}
   <div class="wrap">
     <div class="rv"><b data-count="7">0</b><span>días promedio de entrega</span></div>
     <div class="rv"><b data-count="24" data-suf="/7">0</b><span>respuesta por WhatsApp</span></div>
-    <div class="rv"><b data-count="0"><small>L</small>0</b><span>pagas por etapas, sin sorpresas</span></div>
+    <div class="rv"><b data-count="50" data-suf="%">0</b><span>para iniciar y el resto al aprobar</span></div>
     <div class="rv"><b data-count="100" data-suf="%">0</b><span>código tuyo, sin mensualidades ocultas</span></div>
   </div>
 </div>
@@ -857,7 +914,7 @@ h2.sp.in .w>span{transform:none}
     <div class="faq rv">
       <details open><summary>¿Cuánto cuesta una página web?<i></i></summary><p>Depende de lo que necesite tu negocio: no es lo mismo una landing que una tienda con bot de WhatsApp. Cuéntanos por WhatsApp qué quieres y en menos de una hora tienes una cotización clara, con precio fijo y sin letras pequeñas.</p></details>
       <details><summary>¿En cuánto tiempo está lista?<i></i></summary><p>Una landing en 3 a 5 días, un sitio completo con WhatsApp en 7, y un sistema a medida entre 2 y 4 semanas. Te mostramos avances todos los días.</p></details>
-      <details><summary>¿Tengo que pagar todo de una vez?<i></i></summary><p>No. Pagas por etapas: una parte para iniciar y el resto cuando apruebes el resultado. Nunca pagas por algo que no has visto funcionando.</p></details>
+      <details><summary>¿Tengo que pagar todo de una vez?<i></i></summary><p>No. Para iniciar pagas el 50 % y el otro 50 % cuando apruebes el resultado. Nunca pagas el total por algo que no has visto funcionando.</p></details>
       <details><summary>¿El código y la página son míos?<i></i></summary><p>Sí, 100%. Entregamos todo a tu nombre: dominio, hosting y código. Si algún día quieres trabajar con alguien más, te lo llevas todo.</p></details>
       <details><summary>¿Pueden conectar mi número actual de WhatsApp?<i></i></summary><p>Sí. Integramos tu número de WhatsApp Business existente o te ayudamos a configurar uno nuevo con la API oficial.</p></details>
     </div>
@@ -913,7 +970,7 @@ const easeOut = t => t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 4);
 let lenis = null;
 if (window.Lenis && !isTouch) { lenis = new Lenis({ lerp: .09 }); lenis.stop(); }
 function raf(t){ lenis && lenis.raf(t); onFrame(t); requestAnimationFrame(raf); }
-$$('a[href^="#"]:not([data-wa]):not([data-form]):not([data-plan])').forEach(a => a.addEventListener("click", e => {
+$$('a[href^="#"]:not([data-wa]):not([data-form]):not([data-plan]):not(#fOpen)').forEach(a => a.addEventListener("click", e => {
   const id = a.getAttribute("href"); if (id.length < 2) return; const el = $(id); if (!el) return;
   e.preventDefault(); document.body.classList.remove("menu");
   lenis ? lenis.scrollTo(el, { offset: -60, duration: 1.4 }) : el.scrollIntoView({ behavior: "smooth" });
@@ -1170,7 +1227,7 @@ function morphFrame(now){
     [/^2\b|tienda|ecommerce|vender en l[ií]nea|carrito/i, "Tienda con catálogo, carrito, pagos con tarjeta o transferencia e inventario. Los pedidos te llegan a WhatsApp. 🛍️\n¿Quieres saber precios? Escribe <b>precio</b>."],
     [/^3\b|bot|whatsapp|autom[aá]tic|respuestas/i, "Un bot como este 😉 pero conectado a tu negocio: responde 24/7, toma pedidos, agenda citas y cobra.\nEscribe <b>precio</b> o <b>humano</b> si quieres hablar con una persona."],
     [/^4\b|sistema|inventario|factura|reserva|crm|gym|taxi/i, "Sistemas a medida: inventario, facturación, reservas, control de clientes. Con panel y reportes en tiempo real. 📊\nEscribe <b>precio</b> para cotizar."],
-    [/precio|costo|cu[aá]nto|cotiza|vale/i, "Cada proyecto se cotiza a tu medida y te damos <b>precio fijo en menos de una hora</b>. Pagas por etapas, sin sorpresas.\n¿Hablamos con una persona? Escribe <b>humano</b>."],
+    [/precio|costo|cu[aá]nto|cotiza|vale/i, "Cada proyecto se cotiza a tu medida y te damos <b>precio fijo en menos de una hora</b>. Inicias con el 50 % y el resto al aprobar, sin sorpresas.\n¿Hablamos con una persona? Escribe <b>humano</b>."],
     [/ejemplo|portafolio|trabajo|muestra/i, "Claro 🙌 Mira <b>Amalia's Coffee</b>, <b>Sistema de Gym</b> y <b>Radio Taxi</b> en la sección Trabajo de esta página. ¿Te cotizo algo parecido? Escribe <b>precio</b>."],
     [/humano|persona|hablar|asesor|llamar/i, "¡Perfecto! Toca el botón verde de WhatsApp (abajo a la derecha) y te atiende una persona real en minutos. 💬"],
     [/gracias|ok|vale|dale|listo|perfecto/i, "¡Con gusto! Cuando quieras seguimos. Escribe <b>hola</b> para ver el menú otra vez."],
@@ -1246,37 +1303,59 @@ $$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quier
 
 /* ───── FORMULARIO → WhatsApp ───── */
 (function form(){
-  const fm = $("#fm"), steps = $$("#fForm .fstep"), bars = $$("#fBar i"), nx = $("#fNext"), bk = $("#fBack"), sd = $("#fSend"), plan = $("#fPlan"), wiz = $("#fWiz"), done = $("#fDone");
-  let idx = 0, ctxPlan = "", ctxMsg = "";
-  function show(i){ idx = i; steps.forEach((s, k) => s.classList.toggle("on", k === i)); bars.forEach((b, k) => b.classList.toggle("on", k <= i)); bk.hidden = i === 0; nx.hidden = i === steps.length - 1; sd.hidden = i !== steps.length - 1; }
-  function valid(){ let ok = true; steps[idx].querySelectorAll("[required]").forEach(f => { if (!f.value.trim()) { if (ok) f.focus(); f.style.borderColor = "#e5645a"; ok = false; } else f.style.borderColor = ""; }); return ok; }
-  steps.forEach(st => st.addEventListener("input", e => { if (e.target.style) e.target.style.borderColor = ""; }));
-  function open(o){ ctxPlan = o.plan || ""; ctxMsg = o.msg || ""; plan.hidden = !ctxPlan; plan.textContent = ctxPlan ? "Plan: " + ctxPlan : ""; wiz.hidden = false; done.hidden = true; show(0); fm.classList.add("open"); fm.setAttribute("aria-hidden", "false"); document.body.classList.add("modal"); lenis && lenis.stop(); setTimeout(() => $("#fNombre").focus({ preventScroll: true }), 350); }
+  const fm = $("#fm"), steps = $$("#fForm .fstep"), dots = $$("#fSteps li"), nx = $("#fNext"), bk = $("#fBack"), sd = $("#fSend"), plan = $("#fPlan"), wiz = $("#fWiz"), done = $("#fDone"), err = $("#fErr"), tt = $("#fTitle"), sub = $("#fSub");
+  const TITLES = [["Primero, cuéntanos de ti", "Tarda menos de un minuto y la cotización no tiene costo."], ["¿Qué necesitas?", "Elige todo lo que te interese. Si no estás seguro, marca «No sé aún»."], ["¿Para cuándo y con qué inversión?", "Con esto te damos un precio fijo y realista."], ["Revisa y envía", "Así llegará tu mensaje a nuestro WhatsApp."]];
+  let idx = 0, ctxPlan = "", folio = "", sent = false;
+  const val = id => $("#" + id).value.trim(), rad = n => { const x = document.querySelector('input[name="' + n + '"]:checked'); return x ? x.value : ""; };
+  const esc = t => t.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const hm = () => new Date().toLocaleTimeString("es-HN", { hour: "2-digit", minute: "2-digit" });
+  function msg(){
+    const needs = $$("#fNeeds input:checked").map(i => i.value);
+    const L = ["👋 *¡Hola Kuvo!* Quiero cotizar un proyecto.", "", "🙋 *Nombre:* " + val("fNombre"), "🏢 *Negocio:* " + val("fNegocio"), "🏷️ *Rubro:* " + rad("rubro"), "", "🎯 *Necesito:*"].concat(needs.map(n => "   • " + n));
+    if (ctxPlan) L.push("", "📋 *Plan de interés:* " + ctxPlan);
+    if (val("fPres")) L.push("", "🌐 *Presencia actual:* " + val("fPres"));
+    if (val("fDet")) L.push(val("fPres") ? "" : "", "💡 *Quiero lograr:* " + val("fDet"));
+    L.push("", "⏱️ *Tiempo:* " + rad("tiempo"), "💰 *Presupuesto:* " + rad("ppto"), "", "🔖 *Folio:* " + folio, "", "¿Me pueden cotizar? 🙌", "_Enviado desde la web de Kuvo_");
+    return L.join("\n");
+  }
+  const render = t => esc(t).replace(/\*(.+?)\*/g, "<b>$1</b>").replace(/_(.+?)_/g, "<i>$1</i>").replace(/\n/g, "<br>");
+  function show(i, back){
+    idx = i; steps.forEach((s, k) => { s.classList.toggle("on", k === i); s.classList.toggle("rev", !!back); });
+    dots.forEach((d, k) => { d.classList.toggle("on", k === i); d.classList.toggle("done", k < i); d.firstChild.textContent = k < i ? "✓" : k + 1; });
+    bk.hidden = i === 0; nx.hidden = i === steps.length - 1; sd.hidden = i !== steps.length - 1; tt.textContent = TITLES[i][0]; sub.textContent = TITLES[i][1]; err.textContent = "";
+    if (i === steps.length - 1) { $("#fPrev").innerHTML = render(msg()); $("#fPrevT").innerHTML = hm() + " <em>✓✓</em>"; }
+    $("#fm .fp").scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function valid(){
+    err.textContent = ""; let ok = true; const mark = el => { el.classList.add("bad"); ok = false; };
+    steps[idx].querySelectorAll(".bad").forEach(e => e.classList.remove("bad"));
+    if (idx === 0) { ["fNombre", "fNegocio"].forEach(id => { if (!val(id)) mark($("#" + id)); }); if (!rad("rubro")) mark($("#fRubro")); }
+    if (idx === 1 && !$$("#fNeeds input:checked").length) mark($("#fNeeds"));
+    if (idx === 2) { if (!rad("tiempo")) mark($("#fTiempo")); if (!rad("ppto")) mark($("#fPpto")); }
+    if (!ok) { err.textContent = idx === 1 ? "Elige al menos una opción para continuar." : "Completa lo marcado en rojo para continuar."; const f = steps[idx].querySelector(".bad"); if (f) { f.scrollIntoView({ block: "nearest", behavior: "smooth" }); const i = f.matches("input") ? f : f.querySelector("input"); i && i.focus({ preventScroll: true }); } }
+    return ok;
+  }
+  $("#fForm").addEventListener("input", e => { const g = e.target.closest(".fgrp") || e.target; g.classList.remove("bad"); err.textContent = ""; });
+  $("#fForm").addEventListener("change", e => { const g = e.target.closest(".fgrp"); if (g) { g.classList.remove("bad"); err.textContent = ""; } });
+  function open(o){
+    if (sent) { $("#fForm").reset(); sent = false; }
+    ctxPlan = o.plan || ""; folio = "KV-" + Date.now().toString(36).slice(-5).toUpperCase(); plan.hidden = !ctxPlan; plan.textContent = ctxPlan ? "Plan: " + ctxPlan : "";
+    wiz.hidden = false; done.hidden = true; show(0); fm.classList.add("open"); fm.setAttribute("aria-hidden", "false"); document.body.classList.add("modal"); lenis && lenis.stop(); setTimeout(() => $("#fNombre").focus({ preventScroll: true }), 350);
+  }
   function close(){ fm.classList.remove("open"); fm.setAttribute("aria-hidden", "true"); document.body.classList.remove("modal"); lenis && !document.body.classList.contains("menu") && lenis.start(); }
   window.openForm = open;
   nx.addEventListener("click", () => { if (valid()) show(idx + 1); });
-  bk.addEventListener("click", () => show(idx - 1));
+  bk.addEventListener("click", () => show(idx - 1, true));
   $("#fClose").addEventListener("click", close);
   fm.addEventListener("pointerdown", e => { if (e.target === fm) close(); });
-  window.addEventListener("keydown", e => { if (e.key === "Escape" && fm.classList.contains("open")) close(); if (e.key === "Enter" && fm.classList.contains("open") && e.target.tagName === "INPUT" && e.target.type === "text") { e.preventDefault(); idx < steps.length - 1 ? nx.click() : $("#fForm").requestSubmit(); } });
+  window.addEventListener("keydown", e => { if (!fm.classList.contains("open")) return; if (e.key === "Escape") close(); if (e.key === "Enter" && e.target.tagName === "INPUT" && e.target.type === "text") { e.preventDefault(); idx < steps.length - 1 ? nx.click() : $("#fForm").requestSubmit(); } });
   $("#fForm").addEventListener("submit", e => {
-    e.preventDefault(); if (!valid()) return;
-    const needs = $$("#fNeeds input:checked").map(i => i.value), v = id => $("#" + id).value.trim();
-    const L = ["Hola Kuvo 👋, soy " + v("fNombre") + " de *" + v("fNegocio") + "* (" + v("fRubro") + ")."];
-    if (ctxPlan) L.push("Me interesa el plan: " + ctxPlan + ".");
-    L.push("Necesito: " + (needs.length ? needs.join(", ") : "aún no lo tengo claro") + ".");
-    if (v("fPres")) L.push("Presencia actual: " + v("fPres") + ".");
-    if (v("fDet")) L.push("Quiero lograr: " + v("fDet"));
-    L.push("Tiempo: " + v("fTiempo") + ". Presupuesto: " + v("fPpto") + ".", "¿Me pueden cotizar?");
-    const url = waLink(L.join("\n")); $("#fOpen").href = url;
+    e.preventDefault(); if (idx < steps.length - 1) { nx.click(); return; }
+    const url = waLink(msg()); $("#fOpen").href = url; $("#fFolio").textContent = "Folio " + folio; sent = true;
     wiz.hidden = true; done.hidden = false; window.open(url, "_blank", "noopener");
   });
-  document.addEventListener("click", e => {
-    const a = e.target.closest("[data-wa],[data-plan],[data-form]"); if (!a) return;
-    e.preventDefault(); document.body.classList.remove("menu"); open({ plan: a.dataset.plan || "", msg: a.dataset.msg || "" });
-  });
+  document.addEventListener("click", e => { const a = e.target.closest("[data-wa],[data-plan],[data-form]"); if (!a) return; e.preventDefault(); document.body.classList.remove("menu"); open({ plan: a.dataset.plan || "" }); });
 })();
-
 
 /* ───── 3D: viaje de cámara por un túnel de nanobots (ligado al scroll) ───── */
 const threeFrame = (function scene3d(){
