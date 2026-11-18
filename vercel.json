@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'sha256-DXfsXY29wDMX+4E4ZQMkFSFkRxq6p+Biw4VV7O+h8Lk=' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'sha256-PMWYFUFhOHez3hq98ugeVRZryah12Zhf6yYHNO/UENg='; style-src-elem 'self' https://fonts.googleapis.com 'sha256-PMWYFUFhOHez3hq98ugeVRZryah12Zhf6yYHNO/UENg='; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'sha256-GQn56MrhL+ja82sdJ86+tHoGg1h5icCM8j1eqEtivCU=' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'sha256-OBxRG372xTmVVE2xjdYt+iEVjSJhnj47pSMi4mFJh3c='; style-src-elem 'self' https://fonts.googleapis.com 'sha256-OBxRG372xTmVVE2xjdYt+iEVjSJhnj47pSMi4mFJh3c='; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
         },
         {
           "key": "Strict-Transport-Security",
