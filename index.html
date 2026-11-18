@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
-<!--CSP-START--><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DXfsXY29wDMX+4E4ZQMkFSFkRxq6p+Biw4VV7O+h8Lk=' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'sha256-PMWYFUFhOHez3hq98ugeVRZryah12Zhf6yYHNO/UENg='; style-src-elem 'self' https://fonts.googleapis.com 'sha256-PMWYFUFhOHez3hq98ugeVRZryah12Zhf6yYHNO/UENg='; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'"><!--CSP-END-->
+<!--CSP-START--><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-GQn56MrhL+ja82sdJ86+tHoGg1h5icCM8j1eqEtivCU=' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'sha256-OBxRG372xTmVVE2xjdYt+iEVjSJhnj47pSMi4mFJh3c='; style-src-elem 'self' https://fonts.googleapis.com 'sha256-OBxRG372xTmVVE2xjdYt+iEVjSJhnj47pSMi4mFJh3c='; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'"><!--CSP-END-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kuvo — Estudio digital</title>
@@ -521,6 +521,17 @@ body.ready .wa-float{opacity:1;transform:scale(1);transition-delay:1.6s}
 @keyframes kglow2{50%{filter:drop-shadow(0 0 12px rgba(25,245,168,1))}}
 @keyframes kpulse{50%{transform:scale(1.22);opacity:.7}}
 
+
+/* ───────── PRECIOS ───────── */
+.plan .p{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;font-style:normal}
+.plan .p .am{font-family:var(--sans);font-weight:700;font-style:normal;font-size:clamp(48px,4.4vw,64px);letter-spacing:-.04em;line-height:1}
+.plan .p .since{font-family:var(--mono);font-style:normal;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-right:-4px}
+.plan .p .per{font-family:var(--mono);font-style:normal;font-size:14px;color:var(--mute);margin-left:-8px}
+.plan .p .lp{font-family:var(--mono);font-style:normal;font-size:13px;letter-spacing:.04em;color:var(--acc-2)}
+.plan .p small{flex-basis:100%}
+.plans-note{max-width:820px;margin:34px auto 0;text-align:center;color:var(--mute);font-size:14.5px;line-height:1.6}
+@media(max-width:1100px) and (min-width:901px){.plans{grid-template-columns:repeat(2,1fr)}}
+
 /* ───────── TIPOGRAFÍA GRANDE ───────── */
 body{font-size:19px}
 .mono{font-size:13px}
@@ -556,7 +567,7 @@ h2{font-size:clamp(46px,6.8vw,108px);line-height:.95}
 .pstep .d{font-size:13px}
 .stats b{font-size:clamp(66px,8.6vw,140px)}
 .stats span{font-size:18px;max-width:250px}
-.plan h3{font-size:40px}.plan .p{font-size:36px}.plan .p small{font-size:12px}
+.plan h3{font-size:40px}.plan .p small{font-size:12px}
 .plan ul{font-size:17px}
 .faq{max-width:980px}
 .faq summary{font-size:clamp(22px,2.3vw,32px);padding:32px 0}
@@ -900,13 +911,17 @@ h2.sp.in .w>span{transform:none}
   <div class="wrap">
     <div class="sec-head rv">
       <div><div class="mono">Planes</div><h2>Empieza con lo que necesitas <em class="it">hoy</em>.</h2></div>
-      <p>Cada proyecto se cotiza a tu medida. Estos son los puntos de partida más comunes.</p>
+      <p>Precios claros desde el primer día. Si tu proyecto es distinto, te cotizamos a tu medida en menos de una hora.</p>
     </div>
     <div class="plans">
-      <div class="plan rv"><div class="mono">Presencia</div><h3>Landing</h3><div class="p">Cotización en 1 min<small>Entrega 3–5 días</small></div><ul><li>Página de una sección o varias</li><li>Diseño único, no plantilla</li><li>Botón directo a WhatsApp</li><li>Optimizada para celular y Google</li><li>Dominio y hosting configurados</li></ul><a class="btn" href="#contacto" data-plan="Landing"><span>Cotizar Landing</span></a></div>
-      <div class="plan hi rv"><span class="pop">Más pedido</span><div class="mono">Negocio</div><h3>Web + WhatsApp</h3><div class="p">Cotización en 1 min<small>Entrega 7 días</small></div><ul><li>Sitio completo o tienda en línea</li><li>Bot de WhatsApp con pedidos o citas</li><li>Pagos con tarjeta y transferencia</li><li>Panel para ver pedidos y clientes</li><li>Identidad visual incluida</li><li>1 mes de soporte</li></ul><a class="btn acc" href="#contacto" data-plan="Web + WhatsApp"><span>Cotizar Negocio</span></a></div>
-      <div class="plan rv"><div class="mono">Operación</div><h3>Sistema a medida</h3><div class="p">Cotización en 1 min<small>Entrega 2–4 semanas</small></div><ul><li>Sistema web o app móvil</li><li>Inventario, facturación, reservas, CRM</li><li>Usuarios y roles</li><li>Reportes y dashboard</li><li>Automatizaciones con IA</li><li>Soporte continuo</li></ul><a class="btn" href="#contacto" data-plan="Sistema a medida"><span>Cotizar Sistema</span></a></div>
+      <div class="plan rv"><div class="mono">Presencia</div><h3>Landing</h3><div class="p"><span class="am">$250</span><span class="lp">≈ L 6,500</span><small>Entrega 3–5 días</small></div><ul><li>Página de una sección o varias</li><li>Diseño único, no plantilla</li><li>Botón directo a WhatsApp</li><li>Optimizada para celular y Google</li><li>Dominio y hosting configurados</li></ul><a class="btn" href="#contacto" data-plan="Landing"><span>Cotizar Landing</span></a></div>
+      <div class="plan hi rv"><span class="pop">Más pedido</span><div class="mono">Negocio</div><h3>Web + WhatsApp</h3><div class="p"><span class="am">$500</span><span class="lp">≈ L 13,000</span><small>Entrega 7 días</small></div><ul><li>Sitio completo de varias secciones</li><li>Bot de WhatsApp con pedidos o citas</li><li>Formulario de cotización a tu WhatsApp</li><li>Identidad visual incluida</li><li>Dominio y hosting configurados</li><li>1 mes de soporte</li></ul><a class="btn acc" href="#contacto" data-plan="Web + WhatsApp"><span>Cotizar Negocio</span></a></div>
+      <div class="plan rv"><div class="mono">Tienda</div><h3>Tienda por WhatsApp</h3><div class="p"><span class="am">$700</span><span class="lp">≈ L 18,200</span><small>Entrega 10 días</small></div><ul><li>Catálogo con fotos y precios</li><li>Carrito de compras</li><li>El pedido llega armado a tu WhatsApp</li><li>Panel para editar tus productos</li><li>Pago por transferencia con comprobante</li><li>1 mes de soporte</li></ul><a class="btn" href="#contacto" data-plan="Tienda por WhatsApp"><span>Cotizar Tienda</span></a></div>
+      <div class="plan rv"><div class="mono">Tienda</div><h3>Tienda con pago en línea</h3><div class="p"><span class="am">$750</span><span class="lp">≈ L 19,500</span><small>Entrega 2–3 semanas · pasarela aparte</small></div><ul><li>Todo lo de la tienda por WhatsApp</li><li>Cobro con tarjeta dentro de la web</li><li>Pedidos e inventario en un panel</li><li>Conexión con tu pasarela de pago</li><li>Pruebas de pago antes de lanzar</li><li>1 mes de soporte</li></ul><a class="btn" href="#contacto" data-plan="Tienda con pago en línea"><span>Cotizar Tienda con pagos</span></a></div>
+      <div class="plan rv"><div class="mono">Operación</div><h3>Sistema a medida</h3><div class="p"><em class="since">desde</em><span class="am">$800</span><span class="lp">≈ L 20,800</span><small>Entrega 2–4 semanas · según alcance</small></div><ul><li>Sistema web que se usa también desde el celular</li><li>Inventario, facturación, reservas y CRM</li><li>Citas con agenda</li><li>Usuarios y roles</li><li>Reportes y dashboard</li><li>Soporte con tu mantenimiento</li></ul><a class="btn" href="#contacto" data-plan="Sistema a medida"><span>Cotizar Sistema</span></a></div>
+      <div class="plan rv"><div class="mono">Después del lanzamiento</div><h3>Mantenimiento mensual</h3><div class="p"><span class="am">$30</span><span class="per">/mes</span><span class="lp">≈ L 780</span><small>Cancela cuando quieras</small></div><ul><li>Cambios de textos, fotos y precios</li><li>Vigilancia de seguridad y disponibilidad</li><li>Respaldo de tu sitio</li><li>Soporte por WhatsApp</li><li>Mejoras pequeñas cada mes</li></ul><a class="btn" href="#contacto" data-plan="Mantenimiento mensual"><span>Contratar mantenimiento</span></a></div>
     </div>
+    <p class="plans-note rv">Precios en dólares. Inicias con el 50 % y pagas el resto cuando apruebes el resultado. La pasarela de pago y el dominio se contratan aparte. El equivalente en lempiras es aproximado y cambia con el tipo de cambio del día.</p>
   </div>
 </section>
 
@@ -915,7 +930,7 @@ h2.sp.in .w>span{transform:none}
   <div class="wrap">
     <div class="sec-head rv" style="grid-template-columns:1fr"><div><div class="mono">Preguntas</div><h2>Lo que todos <em class="it">preguntan</em>.</h2></div></div>
     <div class="faq rv">
-      <details open><summary>¿Cuánto cuesta una página web?<i></i></summary><p>Depende de lo que necesite tu negocio: no es lo mismo una landing que una tienda con bot de WhatsApp. Cuéntanos por WhatsApp qué quieres y en menos de una hora tienes una cotización clara, con precio fijo y sin letras pequeñas.</p></details>
+      <details open><summary>¿Cuánto cuesta una página web?<i></i></summary><p>Una landing cuesta desde $250, una web completa con WhatsApp $500, una tienda por WhatsApp $700, una tienda con pago en línea $750 y un sistema a medida desde $800. El mantenimiento mensual, opcional, cuesta $30. Si tu proyecto es distinto, te cotizamos en menos de una hora, con precio fijo y sin letras pequeñas.</p></details>
       <details><summary>¿En cuánto tiempo está lista?<i></i></summary><p>Una landing en 3 a 5 días, un sitio completo con WhatsApp en 7, y un sistema a medida entre 2 y 4 semanas. Te mostramos avances todos los días.</p></details>
       <details><summary>¿Tengo que pagar todo de una vez?<i></i></summary><p>No. Para iniciar pagas el 50 % y el otro 50 % cuando apruebes el resultado. Nunca pagas el total por algo que no has visto funcionando.</p></details>
       <details><summary>¿El código y la página son míos?<i></i></summary><p>Sí, 100%. Entregamos todo a tu nombre: dominio, hosting y código. Si algún día quieres trabajar con alguien más, te lo llevas todo.</p></details>
@@ -1230,7 +1245,7 @@ function morphFrame(now){
     [/^2\b|tienda|ecommerce|vender en l[ií]nea|carrito/i, "Tienda con catálogo, carrito, pagos con tarjeta o transferencia e inventario. Los pedidos te llegan a WhatsApp. 🛍️\n¿Quieres saber precios? Escribe <b>precio</b>."],
     [/^3\b|bot|whatsapp|autom[aá]tic|respuestas/i, "Un bot como este 😉 pero conectado a tu negocio: responde 24/7, toma pedidos, agenda citas y cobra.\nEscribe <b>precio</b> o <b>humano</b> si quieres hablar con una persona."],
     [/^4\b|sistema|inventario|factura|reserva|crm|gym|taxi/i, "Sistemas a medida: inventario, facturación, reservas, control de clientes. Con panel y reportes en tiempo real. 📊\nEscribe <b>precio</b> para cotizar."],
-    [/precio|costo|cu[aá]nto|cotiza|vale/i, "Cada proyecto se cotiza a tu medida y te damos <b>precio fijo en menos de una hora</b>. Inicias con el 50 % y el resto al aprobar, sin sorpresas.\n¿Hablamos con una persona? Escribe <b>humano</b>."],
+    [/precio|costo|cu[aá]nto|cotiza|vale/i, "Estos son nuestros precios 💚\n• Landing: <b>$250</b>\n• Web + WhatsApp: <b>$500</b>\n• Tienda por WhatsApp: <b>$700</b>\n• Tienda con pago en línea: <b>$750</b>\n• Sistema a medida: <b>desde $800</b>\n• Mantenimiento: <b>$30 al mes</b>\nInicias con el 50 % y el resto al aprobar. Escribe <b>humano</b> para cotizar con una persona."],
     [/ejemplo|portafolio|trabajo|muestra/i, "Claro 🙌 Mira <b>Amalia's Coffee</b>, <b>Sistema de Gym</b> y <b>Radio Taxi</b> en la sección Trabajo de esta página. ¿Te cotizo algo parecido? Escribe <b>precio</b>."],
     [/humano|persona|hablar|asesor|llamar/i, "¡Perfecto! Toca el botón verde de WhatsApp (abajo a la derecha) y te atiende una persona real en minutos. 💬"],
     [/gracias|ok|vale|dale|listo|perfecto/i, "¡Con gusto! Cuando quieras seguimos. Escribe <b>hola</b> para ver el menú otra vez."],
