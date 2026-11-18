@@ -1,0 +1,4 @@
+Contact: https://wa.me/50497725316
+Expires: 2027-11-18T00:00:00.000Z
+Preferred-Languages: es, en
+Canonical: https://kuvo-phi.vercel.app/.well-known/security.txt
