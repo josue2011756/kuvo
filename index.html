@@ -1,11 +1,14 @@
 <!doctype html>
 <html lang="es">
 <head>
+<!--CSP-START--><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DXfsXY29wDMX+4E4ZQMkFSFkRxq6p+Biw4VV7O+h8Lk=' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'sha256-PMWYFUFhOHez3hq98ugeVRZryah12Zhf6yYHNO/UENg='; style-src-elem 'self' https://fonts.googleapis.com 'sha256-PMWYFUFhOHez3hq98ugeVRZryah12Zhf6yYHNO/UENg='; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'"><!--CSP-END-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kuvo — Estudio digital</title>
 <meta name="description" content="Kuvo diseña y construye sitios web, tiendas en línea, bots de WhatsApp, sistemas a medida y automatizaciones con IA. Honduras y toda Latinoamérica.">
 <meta name="theme-color" content="#070b09">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23050a07'/%3E%3Cg fill='%2319f5a8'%3E%3Crect x='9.5' y='11.5' width='9.5' height='41'/%3E%3Cpolygon points='23%2C15 29.6%2C9 55%2C32 29.6%2C55 23%2C49 40%2C32'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -652,15 +655,15 @@ h2.sp.in .w>span{transform:none}
         <div class="fbody">
           <div class="fstep on" data-s="0">
             <div class="frow">
-              <div class="fld"><label class="flb" for="fNombre">Tu nombre</label><input id="fNombre" type="text" placeholder="Ej: María López" autocomplete="name"></div>
-              <div class="fld"><label class="flb" for="fNegocio">Tu negocio</label><input id="fNegocio" type="text" placeholder="Ej: Café Amalia"></div>
+              <div class="fld"><label class="flb" for="fNombre">Tu nombre</label><input id="fNombre" type="text" placeholder="Ej: María López" autocomplete="name" maxlength="60"></div>
+              <div class="fld"><label class="flb" for="fNegocio">Tu negocio</label><input id="fNegocio" type="text" placeholder="Ej: Café Amalia" maxlength="80"></div>
             </div>
             <div><span class="flb">¿A qué se dedica?</span><div class="fgrp rcg" id="fRubro"><label class="rc"><input type="radio" name="rubro" value="Restaurante o cafetería"><span><b>☕</b>Restaurante o café</span></label><label class="rc"><input type="radio" name="rubro" value="Tienda o comercio"><span><b>🛍️</b>Tienda o comercio</span></label><label class="rc"><input type="radio" name="rubro" value="Salud, belleza o bienestar"><span><b>💆</b>Salud y belleza</span></label><label class="rc"><input type="radio" name="rubro" value="Gimnasio o fitness"><span><b>🏋️</b>Gimnasio o fitness</span></label><label class="rc"><input type="radio" name="rubro" value="Transporte"><span><b>🚕</b>Transporte</span></label><label class="rc"><input type="radio" name="rubro" value="Servicios profesionales"><span><b>💼</b>Servicios profesionales</span></label><label class="rc"><input type="radio" name="rubro" value="Educación"><span><b>🎓</b>Educación</span></label><label class="rc"><input type="radio" name="rubro" value="Otro"><span><b>✨</b>Otro</span></label></div></div>
           </div>
           <div class="fstep" data-s="1">
             <div><span class="flb">¿Qué necesitas? Puedes elegir varias</span><div class="fgrp ntg" id="fNeeds"><label class="nt"><input type="checkbox" value="Página web"><span><b>🌐</b>Página web</span></label><label class="nt"><input type="checkbox" value="Tienda en línea"><span><b>🛒</b>Tienda en línea</span></label><label class="nt"><input type="checkbox" value="Bot de WhatsApp"><span><b>💬</b>Bot de WhatsApp</span></label><label class="nt"><input type="checkbox" value="Sistema a medida"><span><b>⚙️</b>Sistema a medida</span></label><label class="nt"><input type="checkbox" value="App móvil"><span><b>📱</b>App móvil</span></label><label class="nt"><input type="checkbox" value="Logo e identidad"><span><b>🎨</b>Logo e identidad</span></label><label class="nt"><input type="checkbox" value="No sé aún"><span><b>🤔</b>No sé aún</span></label></div></div>
-            <div class="fld"><label class="flb" for="fPres">¿Ya tienes página o redes? (opcional)</label><input id="fPres" type="text" placeholder="Link, @usuario o escribe «ninguna»"></div>
-            <div class="fld"><label class="flb" for="fDet">¿Qué quieres lograr? (opcional)</label><textarea id="fDet" placeholder="Ej: quiero que mis clientes pidan por WhatsApp sin que yo conteste uno por uno."></textarea></div>
+            <div class="fld"><label class="flb" for="fPres">¿Ya tienes página o redes? (opcional)</label><input id="fPres" type="text" placeholder="Link, @usuario o escribe «ninguna»" maxlength="120"></div>
+            <div class="fld"><label class="flb" for="fDet">¿Qué quieres lograr? (opcional)</label><textarea id="fDet" maxlength="500" placeholder="Ej: quiero que mis clientes pidan por WhatsApp sin que yo conteste uno por uno."></textarea></div>
           </div>
           <div class="fstep" data-s="2">
             <div><span class="flb">¿Para cuándo lo necesitas?</span><div class="fgrp plg" id="fTiempo"><label class="pl"><input type="radio" name="tiempo" value="Lo antes posible"><span>Lo antes posible</span></label><label class="pl"><input type="radio" name="tiempo" value="En 2 semanas"><span>En 2 semanas</span></label><label class="pl"><input type="radio" name="tiempo" value="Este mes"><span>Este mes</span></label><label class="pl"><input type="radio" name="tiempo" value="Sin prisa"><span>Sin prisa</span></label></div></div>
@@ -683,7 +686,7 @@ h2.sp.in .w>span{transform:none}
         <h3>¡Gracias por contarnos!</h3>
         <p>Abrimos WhatsApp con tus respuestas. Si no se abrió, toca el botón de abajo.</p>
         <div class="folio" id="fFolio"></div><br>
-        <a class="btn acc" id="fOpen" href="#" target="_blank" rel="noopener"><span>Abrir WhatsApp</span></a>
+        <a class="btn acc" id="fOpen" href="#" target="_blank" rel="noopener noreferrer"><span>Abrir WhatsApp</span></a>
       </div>
     </form>
   </div>
@@ -952,13 +955,13 @@ h2.sp.in .w>span{transform:none}
 
 <a class="wa-float" href="#" data-wa data-msg="Hola Kuvo, quiero información." aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c.6.3 1.1.4 1.5.6a3.6 3.6 0 0 0 1.7.1 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span>Escríbenos, respondemos rápido</span></a>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js" integrity="sha384-eWPGgBROV7OvRpuavxpzaTSoHT/gkcVjZ94JzXW7WDFZB9qEb4Q9k+8bfx/c1rTM" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" integrity="sha384-tKsJDT6PlUI0pSBt9/sBKJluKgA19/a6mBrDsZaXotLB4ZYfMGM6xt6/WgGpYhTm" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 /* ───── config ───── */
 const WA_NUMBER = "50497725316"; // WhatsApp de Kuvo: +504 9772-5316
 const waLink = msg => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-document.querySelectorAll("[data-wa]").forEach(a => { a.href = waLink(a.dataset.msg || "Hola Kuvo"); a.target = "_blank"; a.rel = "noopener"; });
+document.querySelectorAll("[data-wa]").forEach(a => { a.href = waLink(a.dataset.msg || "Hola Kuvo"); a.target = "_blank"; a.rel = "noopener noreferrer"; });
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1298,7 +1301,7 @@ $$("[data-count]").forEach(el => cio.observe(el));
 const mq = $("#mq"); mq.innerHTML += mq.innerHTML;
 
 /* ───── planes → mensaje ───── */
-$$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quiero cotizar el plan ${a.dataset.plan}.`)); a.target = "_blank"; a.rel = "noopener"; a.removeAttribute("data-mag"); });
+$$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quiero cotizar el plan ${a.dataset.plan}.`)); a.target = "_blank"; a.rel = "noopener noreferrer"; a.removeAttribute("data-mag"); });
 
 
 /* ───── FORMULARIO → WhatsApp ───── */
@@ -1306,7 +1309,7 @@ $$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quier
   const fm = $("#fm"), steps = $$("#fForm .fstep"), dots = $$("#fSteps li"), nx = $("#fNext"), bk = $("#fBack"), sd = $("#fSend"), plan = $("#fPlan"), wiz = $("#fWiz"), done = $("#fDone"), err = $("#fErr"), tt = $("#fTitle"), sub = $("#fSub");
   const TITLES = [["Primero, cuéntanos de ti", "Tarda menos de un minuto y la cotización no tiene costo."], ["¿Qué necesitas?", "Elige todo lo que te interese. Si no estás seguro, marca «No sé aún»."], ["¿Para cuándo y con qué inversión?", "Con esto te damos un precio fijo y realista."], ["Revisa y envía", "Así llegará tu mensaje a nuestro WhatsApp."]];
   let idx = 0, ctxPlan = "", folio = "", sent = false;
-  const val = id => $("#" + id).value.trim(), rad = n => { const x = document.querySelector('input[name="' + n + '"]:checked'); return x ? x.value : ""; };
+  const clean = (t, n) => String(t).replace(/[\u0000-\u0008\u000b-\u001f\u007f\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]/g, "").replace(/\s*\n\s*\n+/g, "\n").trim().slice(0, n || 200), val = id => clean($("#" + id).value, +$("#" + id).getAttribute("maxlength") || 200), rad = n => { const x = document.querySelector('input[name="' + n + '"]:checked'); return x ? x.value : ""; };
   const esc = t => t.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
   const hm = () => new Date().toLocaleTimeString("es-HN", { hour: "2-digit", minute: "2-digit" });
   function msg(){
@@ -1316,7 +1319,7 @@ $$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quier
     if (val("fPres")) L.push("", "🌐 *Presencia actual:* " + val("fPres"));
     if (val("fDet")) L.push(val("fPres") ? "" : "", "💡 *Quiero lograr:* " + val("fDet"));
     L.push("", "⏱️ *Tiempo:* " + rad("tiempo"), "💰 *Presupuesto:* " + rad("ppto"), "", "🔖 *Folio:* " + folio, "", "¿Me pueden cotizar? 🙌", "_Enviado desde la web de Kuvo_");
-    return L.join("\n");
+    return L.join("\n").slice(0, 1800);
   }
   const render = t => esc(t).replace(/\*(.+?)\*/g, "<b>$1</b>").replace(/_(.+?)_/g, "<i>$1</i>").replace(/\n/g, "<br>");
   function show(i, back){
@@ -1352,7 +1355,7 @@ $$("[data-plan]").forEach(a => { a.setAttribute("href", waLink(`Hola Kuvo, quier
   $("#fForm").addEventListener("submit", e => {
     e.preventDefault(); if (idx < steps.length - 1) { nx.click(); return; }
     const url = waLink(msg()); $("#fOpen").href = url; $("#fFolio").textContent = "Folio " + folio; sent = true;
-    wiz.hidden = true; done.hidden = false; window.open(url, "_blank", "noopener");
+    wiz.hidden = true; done.hidden = false; window.open(url, "_blank", "noopener,noreferrer");
   });
   document.addEventListener("click", e => { const a = e.target.closest("[data-wa],[data-plan],[data-form]"); if (!a) return; e.preventDefault(); document.body.classList.remove("menu"); open({ plan: a.dataset.plan || "" }); });
 })();
